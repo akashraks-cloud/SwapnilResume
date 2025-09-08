@@ -31,11 +31,18 @@ const config = {
           dest: path.join("dist", "public/assets"),
         },
         { src: "./assets/*", dest: path.join("dist", "assets") },
+        // Copy PDF files
+        { src: "./src/pdf/*.pdf", dest: "pdf" },
       ],
       silent: true,
     }),
   ],
-  resolve: {},
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
+  assetsInclude: ['**/*.pdf'],
 };
 config.plugins.push(tsconfigPaths());
 export default defineConfig(config);

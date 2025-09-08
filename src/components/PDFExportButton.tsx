@@ -3,7 +3,10 @@ import { Fab, Tooltip, Menu, MenuItem, ListItemIcon, ListItemText } from '@mui/m
 import PictureAsPdfOutlinedIcon from '@mui/icons-material/PictureAsPdfOutlined';
 import PrintIcon from '@mui/icons-material/Print';
 import DownloadIcon from '@mui/icons-material/Download';
+import GetAppIcon from '@mui/icons-material/GetApp';
 import { styled } from '@mui/material/styles';
+// Import the PDF file
+import resumePDF from '../pdf/Swapnil-Pande-Resume-New.pdf';
 
 const StyledFab = styled(Fab)(({ theme }) => ({
   position: 'fixed',
@@ -37,6 +40,24 @@ const PDFExportButton: React.FC = () => {
 
   const handleBrowserPrint = () => {
     window.print();
+    handleClose();
+  };
+
+  const downloadExistingPDF = () => {
+    try {
+      // Create a link element and trigger download
+      const link = document.createElement('a');
+      link.href = resumePDF;
+      link.download = 'Swapnil-Pande-Resume.pdf';
+      link.target = '_blank';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error('PDF Download Error:', error);
+      // Fallback: open PDF in new tab
+      window.open(resumePDF, '_blank');
+    }
     handleClose();
   };
 
@@ -399,6 +420,13 @@ const PDFExportButton: React.FC = () => {
           }
         }}
       >
+        <MenuItem onClick={downloadExistingPDF}>
+          <ListItemIcon>
+            <GetAppIcon sx={{ color: 'white' }} />
+          </ListItemIcon>
+          <ListItemText primary="Download PDF Resume" />
+        </MenuItem>
+        
         <MenuItem onClick={handleExportPDF}>
           <ListItemIcon>
             <PictureAsPdfOutlinedIcon sx={{ color: 'white' }} />
