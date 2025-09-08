@@ -1,54 +1,161 @@
-# React + TypeScript + Vite
+# SwapniResume - Interactive Portfolio Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+🚀 **A modern, interactive portfolio website showcasing software development expertise with stunning animations and AI-themed elements.**
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 🎬 **Techie Loading Screen**
+- 4-second interactive loading animation
+- Matrix-style terminal interface with lavender theme
+- Typewriter effect with realistic coding commands
+- Smooth fade-out transition
 
-## Expanding the ESLint configuration
+### 🎯 **Enhanced Hero Section**
+- Interactive floating code snippets and AI icons
+- Professional profile image integration
+- Real-time animations (particles, glitch effects, typing)
+- LinkedIn profile integration
+- Smooth scroll indicator for better UX
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 🛠️ **Technical Stack**
+- **Frontend**: React 19 + TypeScript
+- **UI Library**: Material-UI (MUI) v7
+- **Styling**: Emotion + CSS-in-JS
+- **Build Tool**: Vite 6
+- **Theme**: Modern dark theme with gradient accents
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
+### 🎨 **Design Highlights**
+- Modern glassmorphism design
+- Sophisticated animation sequences
+- Responsive layout for all devices
+- Software development themed interactions
+- Professional lavender color scheme
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js (v18 or higher)
+- npm or yarn package manager
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/akashraks-cloud/SwapniResume.git
+
+# Navigate to project directory
+cd SwapniResume
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Development Scripts
 
-```js
-// eslint.config.js
-import reactX from "eslint-plugin-react-x";
-import reactDom from "eslint-plugin-react-dom";
+```bash
+# Start development server
+npm run dev
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    "react-x": reactX,
-    "react-dom": reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs["recommended-typescript"].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-});
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+
+# Run linting
+npm run lint
 ```
+
+## 🎯 Key Components
+
+### `LoadingScreen.tsx`
+Interactive loading screen with:
+- Matrix rain animation
+- Terminal typewriter effect
+- Scanning line effects
+- 4-second duration with smooth transitions
+
+### `HeroSection.tsx`
+Main landing section featuring:
+- Profile image with glow effects
+- Floating code elements and tech icons
+- Interactive animations
+- LinkedIn integration
+- Scroll down indicator
+
+### `SkillsShowcase.tsx`
+Technical skills presentation with:
+- Interactive skill cards
+- Progress bars with animations
+- Hover effects and transitions
+
+## 📁 Project Structure
+
+```
+SwapniResume/
+├── src/
+│   ├── components/          # React components
+│   │   ├── LoadingScreen.tsx
+│   │   ├── HeroSection.tsx
+│   │   ├── SkillsShowcase.tsx
+│   │   └── ...
+│   ├── img/                 # Image assets
+│   ├── theme/              # MUI theme configuration
+│   └── types/              # TypeScript declarations
+├── public/                 # Static assets
+└── package.json
+```
+
+## 🎨 Customization
+
+### Adding Your Profile Image
+1. Place your image in `src/img/` folder
+2. Update the import in `HeroSection.tsx`:
+   ```typescript
+   import profileImage from '../img/your-image.jpg';
+   ```
+
+### Modifying Colors
+Update the theme in `src/theme/theme.ts` to customize:
+- Primary/secondary colors
+- Background gradients
+- Text colors
+- Animation colors
+
+### Adjusting Animations
+Animation timings and effects can be modified in individual component files using the `keyframes` definitions.
+
+## 🌟 Live Demo
+
+View the live portfolio at: [Your GitHub Pages URL]
+
+## 👨‍💻 About
+
+**Swapnil Pande**  
+Senior Software Developer & AI Enthusiast  
+14+ Years of Excellence in Java & React  
+
+📧 swapnilbipinpande@gmail.com  
+🔗 [LinkedIn Profile](https://www.linkedin.com/in/swapnil-pande)  
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+## 🚀 Deployment
+
+### GitHub Pages
+1. Build the project: `npm run build`
+2. Deploy the `dist` folder to GitHub Pages
+
+### Vercel/Netlify
+1. Connect your repository
+2. Set build command: `npm run build`
+3. Set publish directory: `dist`
+
+---
+
+⭐ **If you found this portfolio impressive, please star this repository!**
