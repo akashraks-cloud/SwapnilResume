@@ -135,30 +135,68 @@ html {
 
 /* Print styles for PDF export */
 @media print {
+  * {
+    -webkit-print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+  
   body {
     background: white !important;
     color: black !important;
+    font-size: 12pt !important;
+    line-height: 1.4 !important;
   }
   
-  .MuiFab-root {
+  /* Hide elements that shouldn't print */
+  .MuiFab-root, button, .loading-screen, [data-testid="loading"] {
     display: none !important;
   }
   
   .MuiContainer-root {
     max-width: none !important;
     padding: 0 !important;
+    margin: 0 !important;
   }
   
   .MuiPaper-root {
     box-shadow: none !important;
     margin: 0 !important;
     background: white !important;
+    padding: 20pt !important;
   }
   
+  /* Ensure proper page breaks */
+  .section, .MuiBox-root {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  
+  /* Typography fixes for print */
+  h1, h2, h3, h4, h5, h6 {
+    color: #2C3E50 !important;
+    margin-bottom: 10pt !important;
+  }
+  
+  h1 { font-size: 24pt !important; }
+  h2 { font-size: 18pt !important; }
+  h3 { font-size: 16pt !important; }
+  h4 { font-size: 14pt !important; }
+  
+  p, li {
+    font-size: 11pt !important;
+    margin-bottom: 6pt !important;
+  }
+  
+  /* Remove all backgrounds and effects */
   * {
-    background: white !important;
-    color: black !important;
-    box-shadow: none !important;
+    background: transparent !important;
     backdrop-filter: none !important;
+    border-radius: 0 !important;
+  }
+  
+  /* Keep essential borders and spacing */
+  .MuiDivider-root {
+    border-color: #ccc !important;
+    margin: 10pt 0 !important;
   }
 }

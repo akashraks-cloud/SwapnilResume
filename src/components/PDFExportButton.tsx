@@ -1,6 +1,8 @@
-import React from 'react';
-import { Fab, Tooltip } from '@mui/material';
+import React, { useState } from 'react';
+import { Fab, Tooltip, Menu, MenuItem, ListItemIcon, ListItemText } from '@mui/material';
 import PictureAsPdfOutlinedIcon from '@mui/icons-material/PictureAsPdfOutlined';
+import PrintIcon from '@mui/icons-material/Print';
+import DownloadIcon from '@mui/icons-material/Download';
 import { styled } from '@mui/material/styles';
 
 const StyledFab = styled(Fab)(({ theme }) => ({
@@ -22,16 +24,38 @@ const StyledFab = styled(Fab)(({ theme }) => ({
 }));
 
 const PDFExportButton: React.FC = () => {
-  const handleExportPDF = () => {
-    // Create a new window with the resume content for printing
-    const printWindow = window.open('', '_blank');
-    if (!printWindow) return;
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
 
-    const resumeContent = document.getElementById('resume-content');
-    if (!resumeContent) return;
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
 
-    // Create a clean HTML document for PDF export
-    const htmlContent = `
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleBrowserPrint = () => {
+    window.print();
+    handleClose();
+  };
+
+  const downloadAsHTML = () => {
+    const htmlContent = generateResumeHTML();
+    const blob = new Blob([htmlContent], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'Swapnil_Pande_Resume.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    handleClose();
+  };
+
+  const generateResumeHTML = () => {
+    return `
       <!DOCTYPE html>
       <html>
         <head>
@@ -307,25 +331,96 @@ const PDFExportButton: React.FC = () => {
         </body>
       </html>
     `;
+  };
 
-    printWindow.document.write(htmlContent);
-    printWindow.document.close();
+  const handleExportPDF = () => {
+    console.log('PDF Export clicked'); // Debug log
     
-    // Wait for content to load then trigger print
-    printWindow.onload = () => {
+    try {
+      // Create a new window with the resume content for printing
+      const printWindow = window.open('', '_blank', 'width=800,height=600');
+      if (!printWindow) {
+        alert('Please allow pop-ups for this site to enable PDF export.');
+        return;
+      }
+
+      const htmlContent = generateResumeHTML();
+      printWindow.document.write(htmlContent);
+      printWindow.document.close();
+      
+      // Wait for content to load then trigger print
+      printWindow.onload = () => {
+        setTimeout(() => {
+          printWindow.print();
+          // Don't auto-close, let user choose
+        }, 1000); // Increased timeout for better loading
+      };
+      
+      // Fallback for some browsers
       setTimeout(() => {
-        printWindow.print();
-        printWindow.close();
-      }, 500);
-    };
+        if (printWindow && !printWindow.closed) {
+          printWindow.print();
+        }
+      }, 1500);
+      
+    } catch (error) {
+      console.error('PDF Export Error:', error);
+      alert('There was an error generating the PDF. Please try again or use your browser\'s print function (Ctrl+P).');
+    }
+    handleClose();
   };
 
   return (
-    <Tooltip title="Export to PDF" placement="left">
-      <StyledFab onClick={handleExportPDF} size="medium">
-        <PictureAsPdfOutlinedIcon />
-      </StyledFab>
-    </Tooltip>
+    <>
+      <Tooltip title="Export Options" placement="left">
+        <StyledFab onClick={handleClick} size="medium">
+          <PictureAsPdfOutlinedIcon />
+        </StyledFab>
+      </Tooltip>
+      
+      <Menu
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'center',
+          horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'center',
+          horizontal: 'right',
+        }}
+        PaperProps={{
+          sx: {
+            background: 'rgba(30, 41, 59, 0.9)',
+            backdropFilter: 'blur(20px)',
+            border: '1px solid rgba(148, 163, 184, 0.2)',
+            color: 'white'
+          }
+        }}
+      >
+        <MenuItem onClick={handleExportPDF}>
+          <ListItemIcon>
+            <PictureAsPdfOutlinedIcon sx={{ color: 'white' }} />
+          </ListItemIcon>
+          <ListItemText primary="Export to PDF" />
+        </MenuItem>
+        
+        <MenuItem onClick={handleBrowserPrint}>
+          <ListItemIcon>
+            <PrintIcon sx={{ color: 'white' }} />
+          </ListItemIcon>
+          <ListItemText primary="Print Page" />
+        </MenuItem>
+        
+        <MenuItem onClick={downloadAsHTML}>
+          <ListItemIcon>
+            <DownloadIcon sx={{ color: 'white' }} />
+          </ListItemIcon>
+          <ListItemText primary="Download HTML" />
+        </MenuItem>
+      </Menu>
+    </>
   );
 };
 
