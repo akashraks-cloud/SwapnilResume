@@ -105,7 +105,7 @@ const ExperienceTimeline: React.FC = () => {
     {
       year: '2024',
       title: 'Senior Technical Lead',
-      company: 'Tata Consultancy Services',
+      company: 'Fortune 500 MNC',
       duration: '2020 - Present',
       description: [
         'Leading technical architecture for enterprise IoT solutions',
@@ -122,7 +122,7 @@ const ExperienceTimeline: React.FC = () => {
     {
       year: '2020',
       title: 'Technical Architect',
-      company: 'Tata Consultancy Services',
+      company: 'Fortune 500 MNC',
       duration: '2017 - 2020',
       description: [
         'Designed scalable transport management systems',
@@ -139,7 +139,7 @@ const ExperienceTimeline: React.FC = () => {
     {
       year: '2015',
       title: 'Senior Software Developer',
-      company: 'Tata Consultancy Services',
+      company: 'Fortune 500 MNC',
       duration: '2014 - 2017',
       description: [
         'Developed comprehensive audit reporting systems',
@@ -156,7 +156,7 @@ const ExperienceTimeline: React.FC = () => {
     {
       year: '2011',
       title: 'Software Developer',
-      company: 'Tata Consultancy Services',
+      company: 'Fortune 500 MNC',
       duration: '2011 - 2014',
       description: [
         'Started career in enterprise Java development',

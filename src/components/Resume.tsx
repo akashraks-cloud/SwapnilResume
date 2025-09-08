@@ -89,7 +89,7 @@ const Resume: React.FC = () => {
         <Box sx={{ mb: 4 }}>
           <SectionHeader title="Resume Summary" />
           <Typography variant="body1" sx={{ mb: 2 }}>
-            A dynamic professional with 14.4 years of rich experience. Presently working with TATA CONSULTANCY SERVICES in Nagpur as Assistant Consultant. I have been involved in design, development and implementation of various web applications. I have knowledge of Java technologies, Reporting Applications and RDBMS like Oracle, SQL Server, Postgre-SQL.
+            A dynamic professional with 14.4 years of rich experience. Presently working with Fortune 500 Multinational Company in Nagpur as Assistant Consultant. I have been involved in design, development and implementation of various web applications. I have knowledge of Java technologies, Reporting Applications and RDBMS like Oracle, SQL Server, Postgre-SQL.
           </Typography>
           <Typography variant="body1" sx={{ mb: 2 }}>
             Exposure in comprehensive problem-solving capabilities, handling performance issues, excellent experience in various phases of software life cycle such as Planning, Analysis, Design, Development, Testing and Documentation along with good interpersonal skills and willingness to learn.
@@ -104,7 +104,7 @@ const Resume: React.FC = () => {
           <SectionHeader title="Work Experience" />
           <ExperienceItem
             title="Assistant Consultant"
-            company="TATA Consultancy Services Ltd., Nagpur"
+            company="Fortune 500 MNC Ltd., Nagpur"
             duration="March 2011 - Present"
             description={[
               "Interaction with clients for requirements specification",

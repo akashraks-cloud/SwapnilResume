@@ -471,7 +471,7 @@ const HeroSection: React.FC = () => {
             }}>
               Transforming ideas into scalable web applications with expertise in 
               full-stack development, system architecture, and cutting-edge AI technologies at 
-              Tata Consultancy Services.
+              Fortune 500 Multinational Company.
             </AnimatedText>
             
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3} alignItems="center">

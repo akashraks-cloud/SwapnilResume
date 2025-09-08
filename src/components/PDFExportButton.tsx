@@ -182,7 +182,7 @@ const PDFExportButton: React.FC = () => {
               <div class="section-divider"></div>
               <h2 class="section-title">Resume Summary</h2>
             </div>
-            <p>A dynamic professional with 14.4 years of rich experience. Presently working with TATA CONSULTANCY SERVICES in Nagpur as Assistant Consultant. I have been involved in design, development and implementation of various web applications. I have knowledge of Java technologies, Reporting Applications and RDBMS like Oracle, SQL Server, Postgre-SQL.</p>
+            <p>A dynamic professional with 14.4 years of rich experience. Presently working with Fortune 500 Multinational Company in Nagpur as Assistant Consultant. I have been involved in design, development and implementation of various web applications. I have knowledge of Java technologies, Reporting Applications and RDBMS like Oracle, SQL Server, Postgre-SQL.</p>
             <br>
             <p>Exposure in comprehensive problem-solving capabilities, handling performance issues, excellent experience in various phases of software life cycle such as Planning, Analysis, Design, Development, Testing and Documentation along with good interpersonal skills and willingness to learn.</p>
             <br>
@@ -197,7 +197,7 @@ const PDFExportButton: React.FC = () => {
             
             <div class="experience-item">
               <div class="job-title">Assistant Consultant</div>
-              <div class="company">TATA Consultancy Services Ltd., Nagpur</div>
+              <div class="company">Fortune 500 MNC Ltd., Nagpur</div>
               <div class="duration">March 2011 - Present</div>
               <ul style="margin-left: 20px; margin-top: 10px;">
                 <li>Interaction with clients for requirements specification</li>

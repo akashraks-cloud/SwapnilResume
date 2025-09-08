@@ -171,7 +171,7 @@ const ProjectPortfolio: React.FC = () => {
     },
     {
       title: 'Employee Performance Analytics',
-      client: 'Internal TCS Project',
+      client: 'Internal MNC Project',
       duration: '2020 - 2021',
       description: 'Data-driven platform for analyzing employee performance, skill development tracking, and career progression planning.',
       technologies: ['Python', 'React', 'PostgreSQL', 'Apache Spark', 'Tableau'],
