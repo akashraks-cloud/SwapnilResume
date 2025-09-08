@@ -3,6 +3,7 @@ import { Box, Typography, Stack, Container, Card, CardContent, Chip, IconButton 
 import { styled, keyframes } from '@mui/material/styles';
 import LaunchIcon from '@mui/icons-material/Launch';
 import CodeIcon from '@mui/icons-material/Code';
+import FlipCameraAndroidIcon from '@mui/icons-material/FlipCameraAndroid';
 
 const fadeInScale = keyframes`
   from {
@@ -25,47 +26,68 @@ const ProjectsContainer = styled(Box)(({ theme }) => ({
   position: 'relative'
 }));
 
-const ProjectCard = styled(Card)<{ size: 'large' | 'medium' | 'small'; hovered: boolean }>(
-  ({ theme, size, hovered }) => ({
-    background: 'rgba(30, 41, 59, 0.8)',
+const FlipCardContainer = styled(Box)<{ size: 'large' | 'medium' | 'small'; flipped: boolean }>(
+  ({ theme, size, flipped }) => ({
+    perspective: '1000px',
+    height: size === 'large' ? '400px' : size === 'medium' ? '320px' : '280px',
+    cursor: 'pointer',
+    animation: `${fadeInScale} 0.6s ease-out`,
+  })
+);
+
+const FlipCardInner = styled(Box)<{ flipped: boolean }>(
+  ({ flipped }) => ({
+    position: 'relative',
+    width: '100%',
+    height: '100%',
+    textAlign: 'center',
+    transition: 'transform 0.6s',
+    transformStyle: 'preserve-3d',
+    transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
+  })
+);
+
+const ProjectCard = styled(Card)<{ side: 'front' | 'back' }>(
+  ({ theme, side }) => ({
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    backfaceVisibility: 'hidden',
+    background: side === 'front' 
+      ? 'rgba(30, 41, 59, 0.8)' 
+      : 'linear-gradient(135deg, rgba(99, 102, 241, 0.9), rgba(139, 92, 246, 0.9))',
     backdropFilter: 'blur(20px)',
     border: '1px solid rgba(148, 163, 184, 0.2)',
     borderRadius: theme.spacing(3),
-    cursor: 'pointer',
     transition: 'all 0.4s ease',
-    animation: `${fadeInScale} 0.6s ease-out`,
-    height: size === 'large' ? '400px' : size === 'medium' ? '320px' : '280px',
-    transform: hovered ? 'translateY(-10px) scale(1.02)' : 'translateY(0) scale(1)',
-    boxShadow: hovered 
-      ? '0 25px 50px -12px rgba(99, 102, 241, 0.4)' 
-      : '0 10px 25px -5px rgba(0, 0, 0, 0.2)',
+    boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.2)',
+    transform: side === 'back' ? 'rotateY(180deg)' : 'rotateY(0deg)',
     '&:hover': {
       borderColor: theme.palette.primary.main,
-      '& .project-overlay': {
-        opacity: 1,
-        transform: 'translateY(0)'
-      }
+      boxShadow: '0 25px 50px -12px rgba(99, 102, 241, 0.4)',
     }
   })
 );
 
-const ProjectOverlay = styled(Box)(({ theme }) => ({
+const FlipIndicator = styled(Box)(({ theme }) => ({
   position: 'absolute',
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-  background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.9), rgba(139, 92, 246, 0.9))',
-  borderRadius: theme.spacing(3),
-  padding: theme.spacing(3),
-  opacity: 0,
-  transform: 'translateY(20px)',
-  transition: 'all 0.3s ease',
+  top: theme.spacing(1),
+  right: theme.spacing(1),
+  background: 'rgba(99, 102, 241, 0.8)',
+  borderRadius: '50%',
+  width: '32px',
+  height: '32px',
   display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
   alignItems: 'center',
-  textAlign: 'center'
+  justifyContent: 'center',
+  color: 'white',
+  fontSize: '1rem',
+  zIndex: 2,
+  transition: 'all 0.3s ease',
+  '&:hover': {
+    background: 'rgba(99, 102, 241, 1)',
+    transform: 'scale(1.1)'
+  }
 }));
 
 const ProjectIcon = styled(Box)(({ theme }) => ({
@@ -94,7 +116,19 @@ interface Project {
 }
 
 const ProjectPortfolio: React.FC = () => {
-  const [hoveredProject, setHoveredProject] = useState<number | null>(null);
+  const [flippedProjects, setFlippedProjects] = useState<Set<number>>(new Set());
+
+  const handleCardFlip = (index: number) => {
+    setFlippedProjects(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(index)) {
+        newSet.delete(index);
+      } else {
+        newSet.add(index);
+      }
+      return newSet;
+    });
+  };
 
   const projects: Project[] = [
     {
@@ -224,126 +258,186 @@ const ProjectPortfolio: React.FC = () => {
               gridRow: { md: 'span 2' }
             }
           }}>
-            {projects.map((project, index) => (
-              <ProjectCard
-                key={index}
-                size={project.size}
-                hovered={hoveredProject === index}
-                onMouseEnter={() => setHoveredProject(index)}
-                onMouseLeave={() => setHoveredProject(null)}
-                sx={{ position: 'relative', overflow: 'hidden' }}
-              >
-                <CardContent sx={{ p: 3, height: '100%', position: 'relative' }}>
-                  <Stack spacing={2} sx={{ height: '100%' }}>
-                    <Box>
-                      <ProjectIcon>
-                        {project.icon}
-                      </ProjectIcon>
-                      <Typography variant="h5" sx={{ 
-                        fontWeight: 600,
-                        mb: 1,
-                        lineHeight: 1.2
+            {projects.map((project, index) => {
+              const isFlipped = flippedProjects.has(index);
+              
+              return (
+                <FlipCardContainer
+                  key={index}
+                  size={project.size}
+                  flipped={isFlipped}
+                  onClick={() => handleCardFlip(index)}
+                >
+                  <FlipCardInner flipped={isFlipped}>
+                    {/* Front Side */}
+                    <ProjectCard side="front">
+                      <FlipIndicator>
+                        <FlipCameraAndroidIcon sx={{ fontSize: '1rem' }} />
+                      </FlipIndicator>
+                      <CardContent sx={{ 
+                        p: { xs: 2, md: 3 }, 
+                        height: '100%', 
+                        position: 'relative',
+                        overflow: 'auto'
                       }}>
-                        {project.title}
-                      </Typography>
-                      <Typography variant="body2" sx={{ 
-                        color: 'primary.light',
-                        fontWeight: 500,
-                        mb: 0.5
+                        <Stack spacing={2} sx={{ height: '100%' }}>
+                          <Box>
+                            <ProjectIcon>
+                              {project.icon}
+                            </ProjectIcon>
+                            <Typography variant="h5" sx={{ 
+                              fontWeight: 600,
+                              mb: 1,
+                              lineHeight: 1.2,
+                              fontSize: { xs: '1rem', md: '1.25rem' }
+                            }}>
+                              {project.title}
+                            </Typography>
+                            <Typography variant="body2" sx={{ 
+                              color: 'primary.light',
+                              fontWeight: 500,
+                              mb: 0.5,
+                              fontSize: { xs: '0.75rem', md: '0.875rem' }
+                            }}>
+                              {project.client}
+                            </Typography>
+                            <Typography variant="body2" sx={{ 
+                              color: 'text.secondary',
+                              mb: 2,
+                              fontSize: { xs: '0.7rem', md: '0.875rem' }
+                            }}>
+                              {project.duration}
+                            </Typography>
+                          </Box>
+
+                          <Typography variant="body2" sx={{ 
+                            color: 'text.secondary',
+                            lineHeight: 1.4,
+                            flex: 1,
+                            fontSize: { xs: '0.75rem', md: '0.875rem' },
+                            overflow: 'auto'
+                          }}>
+                            {project.description}
+                          </Typography>
+
+                          <Stack direction="row" spacing={1} sx={{ 
+                            flexWrap: 'wrap', 
+                            gap: 0.5,
+                            '& .MuiChip-root': {
+                              fontSize: { xs: '0.6rem', md: '0.75rem' },
+                              height: { xs: '20px', md: '24px' }
+                            }
+                          }}>
+                            {project.technologies.slice(0, 3).map((tech, i) => (
+                              <Chip
+                                key={i}
+                                label={tech}
+                                size="small"
+                                sx={{
+                                  backgroundColor: 'rgba(99, 102, 241, 0.2)',
+                                  color: 'primary.light'
+                                }}
+                              />
+                            ))}
+                            {project.technologies.length > 3 && (
+                              <Chip
+                                label={`+${project.technologies.length - 3}`}
+                                size="small"
+                                sx={{
+                                  backgroundColor: 'rgba(139, 92, 246, 0.2)',
+                                  color: 'secondary.light'
+                                }}
+                              />
+                            )}
+                          </Stack>
+                        </Stack>
+                      </CardContent>
+                    </ProjectCard>
+
+                    {/* Back Side */}
+                    <ProjectCard side="back">
+                      <FlipIndicator>
+                        <FlipCameraAndroidIcon sx={{ fontSize: '1rem' }} />
+                      </FlipIndicator>
+                      <CardContent sx={{ 
+                        p: { xs: 2, md: 3 }, 
+                        height: '100%', 
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        textAlign: 'center',
+                        overflow: 'auto'
                       }}>
-                        {project.client}
-                      </Typography>
-                      <Typography variant="body2" sx={{ 
-                        color: 'text.secondary',
-                        mb: 2
-                      }}>
-                        {project.duration}
-                      </Typography>
-                    </Box>
-
-                    <Typography variant="body2" sx={{ 
-                      color: 'text.secondary',
-                      lineHeight: 1.6,
-                      flex: 1
-                    }}>
-                      {project.description}
-                    </Typography>
-
-                    <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap', gap: 0.5 }}>
-                      {project.technologies.slice(0, 3).map((tech, i) => (
-                        <Chip
-                          key={i}
-                          label={tech}
-                          size="small"
-                          sx={{
-                            backgroundColor: 'rgba(99, 102, 241, 0.2)',
-                            color: 'primary.light',
-                            fontSize: '0.75rem'
-                          }}
-                        />
-                      ))}
-                      {project.technologies.length > 3 && (
-                        <Chip
-                          label={`+${project.technologies.length - 3} more`}
-                          size="small"
-                          sx={{
-                            backgroundColor: 'rgba(139, 92, 246, 0.2)',
-                            color: 'secondary.light',
-                            fontSize: '0.75rem'
-                          }}
-                        />
-                      )}
-                    </Stack>
-                  </Stack>
-
-                  <ProjectOverlay className="project-overlay">
-                    <Typography variant="h6" sx={{ 
-                      fontWeight: 600,
-                      mb: 2,
-                      color: 'white'
-                    }}>
-                      Key Impact
-                    </Typography>
-                    <Stack spacing={1} sx={{ mb: 3 }}>
-                      {project.impact.map((impact, i) => (
-                        <Typography key={i} variant="body2" sx={{ 
+                        <Typography variant="h6" sx={{ 
+                          fontWeight: 600,
+                          mb: 2,
                           color: 'white',
-                          display: 'flex',
-                          alignItems: 'flex-start',
-                          '&::before': {
-                            content: '"✓"',
-                            marginRight: 1,
-                            fontSize: '1rem'
-                          }
+                          fontSize: { xs: '1rem', md: '1.25rem' }
                         }}>
-                          {impact}
+                          Key Impact
                         </Typography>
-                      ))}
-                    </Stack>
-                    <Stack direction="row" spacing={2}>
-                      <IconButton sx={{ 
-                        backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                        color: 'white',
-                        '&:hover': {
-                          backgroundColor: 'rgba(255, 255, 255, 0.3)'
-                        }
-                      }}>
-                        <LaunchIcon />
-                      </IconButton>
-                      <IconButton sx={{ 
-                        backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                        color: 'white',
-                        '&:hover': {
-                          backgroundColor: 'rgba(255, 255, 255, 0.3)'
-                        }
-                      }}>
-                        <CodeIcon />
-                      </IconButton>
-                    </Stack>
-                  </ProjectOverlay>
-                </CardContent>
-              </ProjectCard>
-            ))}
+                        <Stack spacing={1} sx={{ mb: 3, width: '100%', overflow: 'auto' }}>
+                          {project.impact.map((impact, i) => (
+                            <Typography key={i} variant="body2" sx={{ 
+                              color: 'white',
+                              display: 'flex',
+                              alignItems: 'flex-start',
+                              fontSize: { xs: '0.75rem', md: '0.875rem' },
+                              lineHeight: 1.4,
+                              '&::before': {
+                                content: '"✓"',
+                                marginRight: 1,
+                                fontSize: '1rem',
+                                flexShrink: 0
+                              }
+                            }}>
+                              {impact}
+                            </Typography>
+                          ))}
+                        </Stack>
+                        <Stack direction="row" spacing={2} sx={{ mt: 'auto' }}>
+                          <IconButton 
+                            component="a"
+                            href="https://github.com/akashraks-cloud"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            sx={{ 
+                              backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                              color: 'white',
+                              '&:hover': {
+                                backgroundColor: 'rgba(255, 255, 255, 0.3)',
+                                transform: 'scale(1.1)'
+                              },
+                              transition: 'all 0.3s ease'
+                            }}
+                          >
+                            <LaunchIcon />
+                          </IconButton>
+                          <IconButton 
+                            component="a"
+                            href="https://github.com/akashraks-cloud"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            sx={{ 
+                              backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                              color: 'white',
+                              '&:hover': {
+                                backgroundColor: 'rgba(255, 255, 255, 0.3)',
+                                transform: 'scale(1.1)'
+                              },
+                              transition: 'all 0.3s ease'
+                            }}
+                          >
+                            <CodeIcon />
+                          </IconButton>
+                        </Stack>
+                      </CardContent>
+                    </ProjectCard>
+                  </FlipCardInner>
+                </FlipCardContainer>
+              );
+            })}
           </Box>
         </Stack>
       </Container>

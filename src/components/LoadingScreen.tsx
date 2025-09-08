@@ -95,15 +95,16 @@ const CodeLine = styled(Typography)<{ delay: number; animate: boolean }>(({ dela
   animation: animate ? `${typewriter} 1.5s steps(40, end) ${delay}s both, ${blink} 0.75s step-end infinite ${delay + 1.5}s` : 'none',
 }));
 
-const GlitchText = styled(Typography)<{ animate: boolean }>(({ animate }) => ({
-  color: '#FFFFFF',
+const OutputText = styled(Typography)<{ show: boolean }>(({ show }) => ({
+  color: '#00FF00',
   fontFamily: '"Courier New", monospace',
-  fontSize: '3rem',
-  fontWeight: 'bold',
-  textAlign: 'center',
-  marginTop: '2rem',
-  animation: animate ? `${glitch} 0.3s ease-in-out 3s 3` : 'none',
-  textShadow: animate ? '2px 2px 0px #8B5CF6, -2px -2px 0px #A78BFA' : 'none',
+  fontSize: '1.2rem',
+  lineHeight: 1.8,
+  marginTop: '0.5rem',
+  marginLeft: '1rem',
+  opacity: show ? 1 : 0,
+  transition: 'opacity 0.3s ease-in',
+  textShadow: '0 0 10px #00FF00',
 }));
 
 const MatrixChar = styled(Box)<{ delay: number; left: string }>(({ delay, left }) => ({
@@ -121,6 +122,7 @@ const MatrixChar = styled(Box)<{ delay: number; left: string }>(({ delay, left }
 
 const LoadingScreen: React.FC<{ onLoadComplete: () => void }> = ({ onLoadComplete }) => {
   const [currentStep, setCurrentStep] = useState(0);
+  const [showOutput, setShowOutput] = useState(false);
   const [shouldFadeOut, setShouldFadeOut] = useState(false);
   const [matrixChars, setMatrixChars] = useState<Array<{
     id: number;
@@ -130,9 +132,9 @@ const LoadingScreen: React.FC<{ onLoadComplete: () => void }> = ({ onLoadComplet
   }>>([]);
 
   const codeLines = [
-    '> Initializing quantum processors...',
-    '> Loading neural networks...',
-    '> Compiling reality.exe...',
+    '> Initializing technical expertise...',
+    '> Adding loads of software experience...',
+    '> Compiling hardwork.exe...',
     '> console.log("Hello World");'
   ];
 
@@ -157,17 +159,23 @@ const LoadingScreen: React.FC<{ onLoadComplete: () => void }> = ({ onLoadComplet
       });
     }, 800);
 
+    // Show output after last line completes typing (800ms delay + 1.5s typing + 200ms buffer)
+    const outputTimer = setTimeout(() => {
+      setShowOutput(true);
+    }, (codeLines.length - 1) * 800 + 1500 + 200);
+
     // Complete loading after 4 seconds
     const completeTimer = setTimeout(() => {
       setShouldFadeOut(true);
       setTimeout(() => {
         onLoadComplete();
       }, 500); // Wait for fade out animation
-    }, 4000);
+    }, 6000);
 
     return () => {
       clearInterval(stepTimer);
       clearTimeout(completeTimer);
+      clearTimeout(outputTimer);
     };
   }, [onLoadComplete]);
 
@@ -195,9 +203,10 @@ const LoadingScreen: React.FC<{ onLoadComplete: () => void }> = ({ onLoadComplet
           </CodeLine>
         ))}
         
-        <GlitchText animate={currentStep >= codeLines.length - 1}>
-          &gt; Hello World
-        </GlitchText>
+        
+        <OutputText show={showOutput}>
+          Hello World
+        </OutputText>
       </TerminalContainer>
     </LoadingContainer>
   );
