@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, Stack, Container, IconButton, Avatar, Chip } from '@mui/material';
+import { Box, Typography, Stack, Container, IconButton, Avatar, Chip, Tooltip } from '@mui/material';
 import { styled, keyframes } from '@mui/material/styles';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import EmailIcon from '@mui/icons-material/Email';
+import PhoneIcon from '@mui/icons-material/Phone';
 import CodeIcon from '@mui/icons-material/Code';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 import DeveloperModeIcon from '@mui/icons-material/DeveloperMode';
@@ -249,17 +252,68 @@ const TypingText = styled(Typography)<{ delay: number }>(({ delay, theme }) => (
   }
 }));
 
-const LinkedInButton = styled(IconButton)(({ theme }) => ({
-  background: 'linear-gradient(135deg, #0077B5, #005885)',
+const ContactIconButton = styled(IconButton)(({ theme }) => ({
+  background: 'rgba(30, 41, 59, 0.6)',
+  backdropFilter: 'blur(20px)',
+  border: '1px solid rgba(148, 163, 184, 0.3)',
   color: 'white',
   padding: theme.spacing(1.5),
+  margin: theme.spacing(0.5),
   '&:hover': {
-    background: 'linear-gradient(135deg, #005885, #004066)',
+    background: 'rgba(30, 41, 59, 0.8)',
     transform: 'translateY(-2px)',
-    boxShadow: '0 10px 20px rgba(0, 119, 181, 0.3)'
+    boxShadow: '0 8px 25px rgba(0, 0, 0, 0.3)'
+  },
+  '&.email': {
+    '&:hover': {
+      background: 'linear-gradient(135deg, #EA4335, #C5221F)',
+      borderColor: '#EA4335'
+    }
+  },
+  '&.phone': {
+    '&:hover': {
+      background: 'linear-gradient(135deg, #34A853, #137333)',
+      borderColor: '#34A853'
+    }
+  },
+  '&.github': {
+    '&:hover': {
+      background: 'linear-gradient(135deg, #333, #000)',
+      borderColor: '#333'
+    }
   },
   transition: 'all 0.3s ease',
   animation: `${fadeInUp} 1s ease-out 1.4s both`
+}));
+
+const LinkedInButton = styled(ContactIconButton)(() => ({
+  background: 'linear-gradient(135deg, #0077B5, #005885)',
+  borderColor: '#0077B5',
+  '&:hover': {
+    background: 'linear-gradient(135deg, #005885, #004066)',
+    transform: 'translateY(-2px)',
+    boxShadow: '0 10px 20px rgba(0, 119, 181, 0.3)',
+    borderColor: '#0077B5'
+  }
+}));
+
+const NotificationToast = styled(Box)<{ show: boolean }>(({ show, theme }) => ({
+  position: 'fixed',
+  top: '2rem',
+  left: '50%',
+  background: 'rgba(16, 185, 129, 0.9)',
+  color: 'white',
+  padding: theme.spacing(1, 3),
+  borderRadius: theme.spacing(1),
+  backdropFilter: 'blur(10px)',
+  border: '1px solid rgba(16, 185, 129, 0.3)',
+  fontSize: '0.875rem',
+  fontWeight: 500,
+  zIndex: 10000,
+  opacity: show ? 1 : 0,
+  visibility: show ? 'visible' : 'hidden',
+  transform: show ? 'translateX(-50%) translateY(0)' : 'translateX(-50%) translateY(-20px)',
+  transition: 'all 0.3s ease'
 }));
 
 const TechChip = styled(Chip)<{ delay: number }>(({ delay, theme }) => ({
@@ -371,6 +425,27 @@ const HeroSection: React.FC = () => {
     icon: React.ReactNode;
   }>>([]);
 
+  const [copyNotification, setCopyNotification] = useState<string | null>(null);
+
+  const handleCopyToClipboard = async (text: string, type: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopyNotification(`${type} copied to clipboard!`);
+      setTimeout(() => setCopyNotification(null), 2000);
+    } catch (err) {
+      console.error('Failed to copy: ', err);
+      // Fallback for older browsers
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+      setCopyNotification(`${type} copied to clipboard!`);
+      setTimeout(() => setCopyNotification(null), 2000);
+    }
+  };
+
   const codeSnippets = [
     'const ai = new Intelligence()',
     'function develop() { }',
@@ -434,7 +509,12 @@ const HeroSection: React.FC = () => {
   }, []);
 
   return (
-    <HeroContainer>
+    <>
+      <NotificationToast show={!!copyNotification}>
+        {copyNotification}
+      </NotificationToast>
+      
+      <HeroContainer>
       <ParticleContainer>
         {particles.map((particle) => (
           <Particle
@@ -527,31 +607,62 @@ const HeroSection: React.FC = () => {
               Fortune 500 Multinational Company.
             </AnimatedText>
             
-            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3} alignItems="center">
-              <AnimatedText variant="body2" delay={1.2} sx={{ 
-                display: 'flex', 
-                alignItems: 'center',
-                gap: 1,
-                color: 'text.secondary'
-              }}>
-                📧 swapnilbipinpande@gmail.com
-              </AnimatedText>
-              <AnimatedText variant="body2" delay={1.3} sx={{ 
-                display: 'flex', 
-                alignItems: 'center',
-                gap: 1,
-                color: 'text.secondary'
-              }}>
-                📱 9769534547
-              </AnimatedText>
+            <Stack direction="row" spacing={2} justifyContent="center" flexWrap="wrap">
+              <Tooltip 
+                title="Email: akashraks@gmail.com (Click to copy)" 
+                placement="top"
+                arrow
+              >
+                <ContactIconButton 
+                  className="email"
+                  onClick={() => handleCopyToClipboard('akashraks@gmail.com', 'Email')}
+                  size="large"
+                >
+                  <EmailIcon sx={{ fontSize: '1.5rem' }} />
+                </ContactIconButton>
+              </Tooltip>
+              
+              <Tooltip 
+                title="Phone: +91 9769534547 (Click to copy)" 
+                placement="top"
+                arrow
+              >
+                <ContactIconButton 
+                  className="phone"
+                  onClick={() => handleCopyToClipboard('+91 9769534547', 'Phone')}
+                  size="large"
+                >
+                  <PhoneIcon sx={{ fontSize: '1.5rem' }} />
+                </ContactIconButton>
+              </Tooltip>
+              
+              <Tooltip 
+                title="LinkedIn Profile" 
+                placement="top"
+                arrow
+              >
+                <LinkedInButton
+                  onClick={() => window.open('https://www.linkedin.com/in/swapnil-pande-8a219832/', '_blank')}
+                  size="large"
+                >
+                  <LinkedInIcon sx={{ fontSize: '1.5rem' }} />
+                </LinkedInButton>
+              </Tooltip>
+              
+              <Tooltip 
+                title="GitHub Profile" 
+                placement="top"
+                arrow
+              >
+                <ContactIconButton 
+                  className="github"
+                  onClick={() => window.open('https://github.com/akashraks-cloud', '_blank')}
+                  size="large"
+                >
+                  <GitHubIcon sx={{ fontSize: '1.5rem' }} />
+                </ContactIconButton>
+              </Tooltip>
             </Stack>
-            
-            <LinkedInButton
-              onClick={() => window.open('https://www.linkedin.com/in/swapnil-pande', '_blank')}
-              size="large"
-            >
-              <LinkedInIcon sx={{ fontSize: '2rem' }} />
-            </LinkedInButton>
           </Stack>
         </GlassmorphicCard>
       </Container>
@@ -573,6 +684,7 @@ const HeroSection: React.FC = () => {
         <ScrollIcon />
       </ScrollIndicator>
     </HeroContainer>
+    </>
   );
 };
 
