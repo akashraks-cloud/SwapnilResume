@@ -3,17 +3,23 @@ import react from "@vitejs/plugin-react";
 import { viteStaticCopy } from "vite-plugin-static-copy";
 import path from "path";
 import tsconfigPaths from "vite-tsconfig-paths";
+
 const config = {
+  base: '/swapnil-resume.github.io/',
   mode: "development",
   build: {
     outDir: "dist",
     emptyOutDir: true,
     sourcemap: true,
-    minify: false,
-    cssMinify: false,
-    terserOptions: { compress: false, mangle: false },
+    minify: true,
+    cssMinify: true,
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+      },
+    },
   },
-  define: { "process.env.NODE_ENV": "'development'" },
+  define: { "process.env.NODE_ENV": "'production'" },
   esbuild: { jsx: "automatic", jsxImportSource: "react" },
   plugins: [
     react(),

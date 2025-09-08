@@ -1,13 +1,15 @@
 {
-  "name": "77bf25259b1d31a37958a378282fcebe818303b26f9b6c49a8b90197a710b895",
-  "private": true,
-  "version": "0.0.0",
+  "name": "swapnil-resume-portfolio",
+  "private": false,
+  "version": "1.0.0",
   "type": "module",
+  "homepage": "https://swapnil-resume.github.io",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "npm run build && gh-pages -d dist"
   },
   "dependencies": {
     "@emotion/cache": "^11.14.0",
