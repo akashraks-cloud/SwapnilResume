@@ -50,13 +50,23 @@ const FloatingSkillCard = styled(Card)<{ delay: number; hovered: boolean }>(({ t
 }));
 
 const SkillIcon = styled(Box)<{ hovered: boolean }>(({ theme, hovered }) => ({
-  fontSize: '3rem',
+  fontSize: '5rem',
   color: theme.palette.primary.main,
   marginBottom: theme.spacing(2),
   animation: hovered ? `${pulse} 0.6s ease-in-out` : 'none',
-  transition: 'color 0.3s ease',
+  transition: 'all 0.3s ease',
+  '& .MuiSvgIcon-root': {
+    fontSize: '5rem',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '4rem'
+    }
+  },
   '&:hover': {
-    color: theme.palette.primary.light
+    color: theme.palette.primary.light,
+    transform: 'scale(1.1)'
+  },
+  [theme.breakpoints.down('sm')]: {
+    fontSize: '4rem'
   }
 }));
 

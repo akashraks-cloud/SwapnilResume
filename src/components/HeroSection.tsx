@@ -175,12 +175,15 @@ const AIIcon = styled(Box)<{ delay: number }>(({ delay }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  width: '40px',
-  height: '40px',
+  width: '50px',
+  height: '50px',
   borderRadius: '50%',
   background: 'rgba(139, 92, 246, 0.1)',
   backdropFilter: 'blur(10px)',
-  border: '1px solid rgba(139, 92, 246, 0.3)'
+  border: '1px solid rgba(139, 92, 246, 0.3)',
+  '& .MuiSvgIcon-root': {
+    fontSize: '2rem'
+  }
 }));
 
 const ProfileImageContainer = styled(Box)(({ theme }) => ({
@@ -242,12 +245,31 @@ const TechChip = styled(Chip)<{ delay: number }>(({ delay, theme }) => ({
   border: '1px solid rgba(99, 102, 241, 0.3)',
   backdropFilter: 'blur(10px)',
   animation: `${fadeInUp} 1s ease-out ${delay}s both`,
+  fontSize: '1rem',
+  padding: theme.spacing(1, 2),
+  '& .MuiChip-icon': {
+    fontSize: '1.5rem !important',
+    marginLeft: theme.spacing(1),
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '1.3rem !important'
+    }
+  },
+  '& .MuiChip-label': {
+    fontSize: '1rem',
+    fontWeight: 600,
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '0.9rem'
+    }
+  },
   '&:hover': {
     background: 'rgba(99, 102, 241, 0.2)',
     transform: 'translateY(-2px)',
     boxShadow: '0 5px 15px rgba(99, 102, 241, 0.3)'
   },
-  transition: 'all 0.3s ease'
+  transition: 'all 0.3s ease',
+  [theme.breakpoints.down('sm')]: {
+    padding: theme.spacing(0.8, 1.5)
+  }
 }));
 
 const ScrollIndicator = styled(Box)(({ theme }) => ({
@@ -452,7 +474,7 @@ const HeroSection: React.FC = () => {
               fontFamily: 'Inter',
               textAlign: 'center'
             }}>
-              Senior Software Developer & AI Enthusiast
+              Senior Software Developer & AI Certified Technical Lead
             </AnimatedText>
             
             <Stack direction="row" spacing={2} flexWrap="wrap" justifyContent="center">
