@@ -3,7 +3,7 @@
   "private": false,
   "version": "1.0.0",
   "type": "module",
-  "homepage": "https://akashraks-cloud.github.io/SwapniResume",
+  "homepage": "https://akashraks-cloud.github.io/swapnilResume",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

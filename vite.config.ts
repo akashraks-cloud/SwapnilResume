@@ -5,7 +5,7 @@ import path from "path";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 const config = {
-  base: '/SwapniResume/',
+  base: '/swapnilResume/',
   mode: "development",
   build: {
     outDir: "dist",
