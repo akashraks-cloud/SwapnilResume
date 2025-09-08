@@ -210,8 +210,6 @@ const ProfileImageContainer = styled(Box)(({ theme }) => ({
 }));
 
 const ProfileAvatar = styled(Avatar)(({ theme }) => ({
-  width: 180,
-  height: 180,
   border: '4px solid rgba(255, 255, 255, 0.1)',
   animation: `${fadeInUp} 1s ease-out 0.3s both`,
   transition: 'transform 0.3s ease',
@@ -257,7 +255,6 @@ const ContactIconButton = styled(IconButton)(({ theme }) => ({
   backdropFilter: 'blur(20px)',
   border: '1px solid rgba(148, 163, 184, 0.3)',
   color: 'white',
-  padding: theme.spacing(1.5),
   margin: theme.spacing(0.5),
   '&:hover': {
     background: 'rgba(30, 41, 59, 0.8)',
@@ -565,8 +562,10 @@ const HeroSection: React.FC = () => {
                 src={profileImage}
                 alt="Swapnil Pande"
                 sx={{
+                  width: { xs: 120, sm: 150, md: 180 },
+                  height: { xs: 120, sm: 150, md: 180 },
                   background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
-                  fontSize: '3rem',
+                  fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
                   fontWeight: 'bold',
                   color: 'white'
                 }}
@@ -583,12 +582,21 @@ const HeroSection: React.FC = () => {
               color: 'text.secondary',
               fontWeight: 400,
               fontFamily: 'Inter',
-              textAlign: 'center'
+              textAlign: 'center',
+              fontSize: { xs: '1.2rem', sm: '1.5rem', md: '1.875rem' },
+              lineHeight: { xs: 1.3, md: 1.2 },
+              px: { xs: 2, md: 0 }
             }}>
               Senior Software Developer & AI Certified Technical Lead
             </AnimatedText>
             
-            <Stack direction="row" spacing={2} flexWrap="wrap" justifyContent="center">
+            <Stack 
+              direction={{ xs: 'column', sm: 'row' }} 
+              spacing={2} 
+              flexWrap="wrap" 
+              justifyContent="center"
+              alignItems="center"
+            >
               <TechChip delay={1.0} label="Java" icon={<CodeIcon />} />
               <TechChip delay={1.1} label="React" icon={<DeveloperModeIcon />} />
               <TechChip delay={1.2} label="AI/ML" icon={<SmartToyIcon />} />
@@ -597,17 +605,28 @@ const HeroSection: React.FC = () => {
             
             <AnimatedText variant="body1" delay={1.0} sx={{ 
               maxWidth: '700px',
-              fontSize: '1.125rem',
-              lineHeight: 1.7,
+              fontSize: { xs: '1rem', md: '1.125rem' },
+              lineHeight: { xs: 1.6, md: 1.7 },
               color: 'text.secondary',
-              textAlign: 'center'
+              textAlign: 'center',
+              px: { xs: 2, md: 0 }
             }}>
               Transforming ideas into scalable web applications with expertise in 
               full-stack development, system architecture, and cutting-edge AI technologies at 
               Fortune 500 Multinational Company.
             </AnimatedText>
             
-            <Stack direction="row" spacing={2} justifyContent="center" flexWrap="wrap">
+            <Stack 
+              direction="row" 
+              spacing={{ xs: 1, md: 2 }} 
+              justifyContent="center" 
+              flexWrap="wrap"
+              sx={{ 
+                '& > *': {
+                  margin: { xs: '4px !important', md: '8px !important' }
+                }
+              }}
+            >
               <Tooltip 
                 title="Email: akashraks@gmail.com (Click to copy)" 
                 placement="top"
@@ -616,9 +635,11 @@ const HeroSection: React.FC = () => {
                 <ContactIconButton 
                   className="email"
                   onClick={() => handleCopyToClipboard('akashraks@gmail.com', 'Email')}
-                  size="large"
+                  sx={{
+                    padding: { xs: 1, md: 1.5 }
+                  }}
                 >
-                  <EmailIcon sx={{ fontSize: '1.5rem' }} />
+                  <EmailIcon sx={{ fontSize: { xs: '1.2rem', md: '1.5rem' } }} />
                 </ContactIconButton>
               </Tooltip>
               
@@ -630,9 +651,11 @@ const HeroSection: React.FC = () => {
                 <ContactIconButton 
                   className="phone"
                   onClick={() => handleCopyToClipboard('+91 9769534547', 'Phone')}
-                  size="large"
+                  sx={{
+                    padding: { xs: 1, md: 1.5 }
+                  }}
                 >
-                  <PhoneIcon sx={{ fontSize: '1.5rem' }} />
+                  <PhoneIcon sx={{ fontSize: { xs: '1.2rem', md: '1.5rem' } }} />
                 </ContactIconButton>
               </Tooltip>
               
@@ -643,9 +666,11 @@ const HeroSection: React.FC = () => {
               >
                 <LinkedInButton
                   onClick={() => window.open('https://www.linkedin.com/in/swapnil-pande-8a219832/', '_blank')}
-                  size="large"
+                  sx={{
+                    padding: { xs: 1, md: 1.5 }
+                  }}
                 >
-                  <LinkedInIcon sx={{ fontSize: '1.5rem' }} />
+                  <LinkedInIcon sx={{ fontSize: { xs: '1.2rem', md: '1.5rem' } }} />
                 </LinkedInButton>
               </Tooltip>
               
@@ -657,9 +682,11 @@ const HeroSection: React.FC = () => {
                 <ContactIconButton 
                   className="github"
                   onClick={() => window.open('https://github.com/akashraks-cloud', '_blank')}
-                  size="large"
+                  sx={{
+                    padding: { xs: 1, md: 1.5 }
+                  }}
                 >
-                  <GitHubIcon sx={{ fontSize: '1.5rem' }} />
+                  <GitHubIcon sx={{ fontSize: { xs: '1.2rem', md: '1.5rem' } }} />
                 </ContactIconButton>
               </Tooltip>
             </Stack>

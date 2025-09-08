@@ -60,7 +60,12 @@ const ContactIcon = styled(Box)(({ theme }) => ({
   color: 'white',
   marginBottom: theme.spacing(2),
   boxShadow: '0 10px 30px rgba(99, 102, 241, 0.3)',
-  transition: 'all 0.3s ease'
+  transition: 'all 0.3s ease',
+  [theme.breakpoints.down('md')]: {
+    width: '50px',
+    height: '50px',
+    fontSize: '1.2rem'
+  }
 }));
 
 const SocialButton = styled(IconButton)(({ theme }) => ({
@@ -175,20 +180,25 @@ const ContactSection: React.FC = () => {
                 onMouseLeave={() => setHoveredCard(null)}
                 onClick={() => handleContactClick(contact.action)}
               >
-                <CardContent sx={{ p: 3, textAlign: 'center' }}>
+                <CardContent sx={{ 
+                  p: { xs: 2, md: 3 }, 
+                  textAlign: 'center' 
+                }}>
                   <ContactIcon className="contact-icon">
                     {contact.icon}
                   </ContactIcon>
                   <Typography variant="h6" sx={{ 
                     fontWeight: 600,
                     mb: 1,
-                    color: 'text.primary'
+                    color: 'text.primary',
+                    fontSize: { xs: '1rem', md: '1.25rem' }
                   }}>
                     {contact.title}
                   </Typography>
                   <Typography variant="body1" sx={{ 
                     color: 'text.secondary',
-                    wordBreak: 'break-word'
+                    wordBreak: 'break-word',
+                    fontSize: { xs: '0.875rem', md: '1rem' }
                   }}>
                     {contact.value}
                   </Typography>
@@ -202,7 +212,8 @@ const ContactSection: React.FC = () => {
             <Typography variant="h4" sx={{ 
               textAlign: 'center',
               mb: 4,
-              fontWeight: 600
+              fontWeight: 600,
+              fontSize: { xs: '1.5rem', md: '2.125rem' }
             }}>
               Professional Highlights
             </Typography>
@@ -222,13 +233,15 @@ const ContactSection: React.FC = () => {
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     backgroundClip: 'text',
-                    mb: 1
+                    mb: 1,
+                    fontSize: { xs: '1.5rem', md: '3rem' }
                   }}>
                     {stat.number}
                   </Typography>
                   <Typography variant="body2" sx={{ 
                     color: 'text.secondary',
-                    fontWeight: 500
+                    fontWeight: 500,
+                    fontSize: { xs: '0.75rem', md: '0.875rem' }
                   }}>
                     {stat.label}
                   </Typography>
@@ -241,11 +254,22 @@ const ContactSection: React.FC = () => {
           <Box textAlign="center">
             <Typography variant="h6" sx={{ 
               mb: 3,
-              fontWeight: 600
+              fontWeight: 600,
+              fontSize: { xs: '1rem', md: '1.25rem' }
             }}>
               Connect on Social Platforms
             </Typography>
-            <Stack direction="row" spacing={3} justifyContent="center">
+            <Stack 
+              direction="row" 
+              spacing={{ xs: 2, md: 3 }} 
+              justifyContent="center"
+              flexWrap="wrap"
+              sx={{
+                '& > *': {
+                  margin: { xs: '4px !important', md: '12px !important' }
+                }
+              }}
+            >
               <SocialButton>
                 <LinkedInIcon />
               </SocialButton>
@@ -269,13 +293,16 @@ const ContactSection: React.FC = () => {
           }}>
             <Typography variant="h5" sx={{ 
               fontWeight: 600,
-              mb: 2
+              mb: 2,
+              fontSize: { xs: '1.1rem', md: '1.5rem' }
             }}>
               Ready to Build Something Amazing?
             </Typography>
             <Typography variant="body1" sx={{ 
               color: 'text.secondary',
-              mb: 3
+              mb: 3,
+              fontSize: { xs: '0.875rem', md: '1rem' },
+              lineHeight: { xs: 1.5, md: 1.6 }
             }}>
               Whether you need a technical architect, full-stack developer, or team leader, 
               I'm here to help bring your vision to life with cutting-edge technology and 
@@ -283,7 +310,8 @@ const ContactSection: React.FC = () => {
             </Typography>
             <Typography variant="body2" sx={{ 
               color: 'primary.light',
-              fontWeight: 500
+              fontWeight: 500,
+              fontSize: { xs: '0.75rem', md: '0.875rem' }
             }}>
               Available for freelance projects and consulting opportunities
             </Typography>

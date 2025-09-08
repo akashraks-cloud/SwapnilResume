@@ -36,7 +36,7 @@ const matrixRain = keyframes`
   100% { transform: translateY(100vh); opacity: 0; }
 `;
 
-const LoadingContainer = styled(Box)<{ fadeOut: boolean }>(({ fadeOut }) => ({
+const LoadingContainer = styled(Box)<{ fadeOut: boolean }>(({ fadeOut, theme }) => ({
   position: 'fixed',
   top: 0,
   left: 0,
@@ -47,6 +47,7 @@ const LoadingContainer = styled(Box)<{ fadeOut: boolean }>(({ fadeOut }) => ({
   alignItems: 'center',
   justifyContent: 'center',
   zIndex: 9999,
+  padding: theme.spacing(1),
   animation: fadeOut ? `${fadeOut} 0.5s ease-out forwards` : 'none',
   '&::before': {
     content: '""',
@@ -60,15 +61,27 @@ const LoadingContainer = styled(Box)<{ fadeOut: boolean }>(({ fadeOut }) => ({
   }
 }));
 
-const TerminalContainer = styled(Box)({
+const TerminalContainer = styled(Box)(({ theme }) => ({
   position: 'relative',
-  padding: '2rem',
+  padding: theme.spacing(2),
   borderRadius: '8px',
   backgroundColor: 'rgba(20, 0, 20, 0.9)',
   border: '2px solid #8B5CF6',
   boxShadow: '0 0 50px rgba(139, 92, 246, 0.3)',
   fontFamily: '"Courier New", "Monaco", "Lucida Console", monospace',
-  minWidth: '400px',
+  width: '100%',
+  maxWidth: '600px',
+  minWidth: '280px',
+  maxHeight: '90vh',
+  overflow: 'auto',
+  [theme.breakpoints.up('sm')]: {
+    padding: theme.spacing(3),
+    maxWidth: '700px',
+  },
+  [theme.breakpoints.up('md')]: {
+    padding: theme.spacing(4),
+    maxWidth: '800px',
+  },
   '&::before': {
     content: '""',
     position: 'absolute',
@@ -79,51 +92,81 @@ const TerminalContainer = styled(Box)({
     borderRadius: '50%',
     backgroundColor: '#FF5F56',
     boxShadow: '20px 0 0 #FFBD2E, 40px 0 0 #27CA3F',
+    [theme.breakpoints.down('sm')]: {
+      width: '8px',
+      height: '8px',
+      top: '8px',
+      left: '10px',
+      boxShadow: '14px 0 0 #FFBD2E, 28px 0 0 #27CA3F',
+    }
   }
-});
+}));
 
-const CodeLine = styled(Typography)<{ delay: number; animate: boolean }>(({ delay, animate }) => ({
+const CodeLine = styled(Typography)<{ delay: number; animate: boolean }>(({ delay, animate, theme }) => ({
   color: '#8B5CF6',
   fontFamily: 'inherit',
-  fontSize: '1.2rem',
-  lineHeight: 1.8,
+  fontSize: '0.9rem',
+  lineHeight: 1.6,
   margin: 0,
   overflow: 'hidden',
   borderRight: '3px solid #8B5CF6',
   whiteSpace: 'nowrap',
   width: animate ? '100%' : '0',
   animation: animate ? `${typewriter} 1.5s steps(40, end) ${delay}s both, ${blink} 0.75s step-end infinite ${delay + 1.5}s` : 'none',
+  [theme.breakpoints.up('sm')]: {
+    fontSize: '1rem',
+    lineHeight: 1.7,
+  },
+  [theme.breakpoints.up('md')]: {
+    fontSize: '1.2rem',
+    lineHeight: 1.8,
+  }
 }));
 
-const OutputText = styled(Typography)<{ show: boolean }>(({ show }) => ({
+const OutputText = styled(Typography)<{ show: boolean }>(({ show, theme }) => ({
   color: '#00FF00',
   fontFamily: '"Courier New", monospace',
-  fontSize: '1.2rem',
-  lineHeight: 1.8,
+  fontSize: '0.9rem',
+  lineHeight: 1.6,
   marginTop: '0.5rem',
   marginLeft: '1rem',
   opacity: show ? 1 : 0,
   transition: 'opacity 0.3s ease-in',
   textShadow: '0 0 10px #00FF00',
+  [theme.breakpoints.up('sm')]: {
+    fontSize: '1rem',
+    lineHeight: 1.7,
+  },
+  [theme.breakpoints.up('md')]: {
+    fontSize: '1.2rem',
+    lineHeight: 1.8,
+  }
 }));
 
-const MatrixChar = styled(Box)<{ delay: number; left: string }>(({ delay, left }) => ({
+const MatrixChar = styled(Box)<{ delay: number; left: string }>(({ delay, left, theme }) => ({
   position: 'absolute',
   top: 0,
   left: left,
   color: '#8B5CF6',
   fontFamily: '"Courier New", monospace',
-  fontSize: '1rem',
+  fontSize: '0.8rem',
   animation: `${matrixRain} 6s linear infinite`,
   animationDelay: `${delay}s`,
   opacity: 0.4,
   pointerEvents: 'none',
+  [theme.breakpoints.up('sm')]: {
+    fontSize: '0.9rem',
+  },
+  [theme.breakpoints.up('md')]: {
+    fontSize: '1rem',
+  }
 }));
 
 const LoadingScreen: React.FC<{ onLoadComplete: () => void }> = ({ onLoadComplete }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [showOutput, setShowOutput] = useState(false);
   const [shouldFadeOut, setShouldFadeOut] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const [matrixChars, setMatrixChars] = useState<Array<{
     id: number;
     char: string;
@@ -138,10 +181,26 @@ const LoadingScreen: React.FC<{ onLoadComplete: () => void }> = ({ onLoadComplet
     '> console.log("Hello World");'
   ];
 
+  // Responsive code lines for mobile
+  const mobileCodeLines = [
+    '> Init technical expertise...',
+    '> Adding software experience...',
+    '> Compiling hardwork.exe...',
+    '> console.log("Hello World");'
+  ];
+
   useEffect(() => {
+    // Check if mobile on mount and resize
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 600);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
     // Generate matrix rain characters
     const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
-    const matrixElements = Array.from({ length: 50 }, (_, i) => ({
+    const matrixElements = Array.from({ length: isMobile ? 30 : 50 }, (_, i) => ({
       id: i,
       char: chars[Math.floor(Math.random() * chars.length)],
       left: `${Math.random() * 100}%`,
@@ -149,10 +208,12 @@ const LoadingScreen: React.FC<{ onLoadComplete: () => void }> = ({ onLoadComplet
     }));
     setMatrixChars(matrixElements);
 
+    const displayLines = isMobile ? mobileCodeLines : codeLines;
+
     // Step progression timer
     const stepTimer = setInterval(() => {
       setCurrentStep((prev) => {
-        if (prev < codeLines.length - 1) {
+        if (prev < displayLines.length - 1) {
           return prev + 1;
         }
         return prev;
@@ -162,7 +223,7 @@ const LoadingScreen: React.FC<{ onLoadComplete: () => void }> = ({ onLoadComplet
     // Show output after last line completes typing (800ms delay + 1.5s typing + 200ms buffer)
     const outputTimer = setTimeout(() => {
       setShowOutput(true);
-    }, (codeLines.length - 1) * 800 + 1500 + 200);
+    }, (displayLines.length - 1) * 800 + 1500 + 200);
 
     // Complete loading after 4 seconds
     const completeTimer = setTimeout(() => {
@@ -170,14 +231,15 @@ const LoadingScreen: React.FC<{ onLoadComplete: () => void }> = ({ onLoadComplet
       setTimeout(() => {
         onLoadComplete();
       }, 500); // Wait for fade out animation
-    }, 6000);
+    }, 4000);
 
     return () => {
       clearInterval(stepTimer);
       clearTimeout(completeTimer);
       clearTimeout(outputTimer);
+      window.removeEventListener('resize', checkMobile);
     };
-  }, [onLoadComplete]);
+  }, [onLoadComplete, isMobile]);
 
   return (
     <LoadingContainer fadeOut={shouldFadeOut}>
@@ -193,7 +255,7 @@ const LoadingScreen: React.FC<{ onLoadComplete: () => void }> = ({ onLoadComplet
       ))}
       
       <TerminalContainer>
-        {codeLines.map((line, index) => (
+        {(isMobile ? mobileCodeLines : codeLines).map((line, index) => (
           <CodeLine
             key={index}
             delay={index * 0.8}

@@ -31,43 +31,75 @@ const TimelineContainer = styled(Box)(({ theme }) => ({
   position: 'relative'
 }));
 
-const TimelineWrapper = styled(Box)({
+const TimelineWrapper = styled(Box)(({ theme }) => ({
   position: 'relative',
-  '&::before': {
-    content: '""',
-    position: 'absolute',
-    left: '50%',
-    top: 0,
-    bottom: 0,
-    width: '4px',
-    background: 'linear-gradient(180deg, #6366F1, #8B5CF6, #06B6D4)',
-    transform: 'translateX(-50%)',
-    borderRadius: '2px',
-    boxShadow: '0 0 20px rgba(99, 102, 241, 0.5)'
+  [theme.breakpoints.up('md')]: {
+    '&::before': {
+      content: '""',
+      position: 'absolute',
+      left: '50%',
+      top: 0,
+      bottom: 0,
+      width: '4px',
+      background: 'linear-gradient(180deg, #6366F1, #8B5CF6, #06B6D4)',
+      transform: 'translateX(-50%)',
+      borderRadius: '2px',
+      boxShadow: '0 0 20px rgba(99, 102, 241, 0.5)'
+    }
+  },
+  [theme.breakpoints.down('md')]: {
+    '&::before': {
+      content: '""',
+      position: 'absolute',
+      left: '20px',
+      top: 0,
+      bottom: 0,
+      width: '3px',
+      background: 'linear-gradient(180deg, #6366F1, #8B5CF6, #06B6D4)',
+      borderRadius: '2px',
+      boxShadow: '0 0 15px rgba(99, 102, 241, 0.5)'
+    }
   }
-});
+}));
 
 const TimelineItem = styled(Box)<{ isLeft: boolean; index: number }>(({ theme, isLeft, index }) => ({
   display: 'flex',
-  justifyContent: isLeft ? 'flex-end' : 'flex-start',
-  width: '50%',
-  marginLeft: isLeft ? 0 : '50%',
-  marginBottom: theme.spacing(6),
-  animation: `${isLeft ? slideInLeft : slideInRight} 0.8s ease-out ${index * 0.2}s both`,
-  position: 'relative'
+  width: '100%',
+  marginBottom: theme.spacing(4),
+  position: 'relative',
+  [theme.breakpoints.up('md')]: {
+    justifyContent: isLeft ? 'flex-end' : 'flex-start',
+    width: '50%',
+    marginLeft: isLeft ? 0 : '50%',
+    marginBottom: theme.spacing(6),
+    animation: `${isLeft ? slideInLeft : slideInRight} 0.8s ease-out ${index * 0.2}s both`,
+  },
+  [theme.breakpoints.down('md')]: {
+    justifyContent: 'flex-start',
+    paddingLeft: theme.spacing(6),
+    animation: `${slideInLeft} 0.8s ease-out ${index * 0.2}s both`,
+  }
 }));
 
 const TimelineDot = styled(Box)(({ theme }) => ({
   position: 'absolute',
-  left: isLeft => isLeft ? 'calc(100% + 16px)' : '-28px',
   top: '24px',
-  width: '24px',
-  height: '24px',
+  width: '20px',
+  height: '20px',
   borderRadius: '50%',
   background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
-  border: `4px solid ${theme.palette.background.default}`,
-  boxShadow: `0 0 20px ${theme.palette.primary.main}60`,
-  zIndex: 2
+  border: `3px solid ${theme.palette.background.default}`,
+  boxShadow: `0 0 15px ${theme.palette.primary.main}60`,
+  zIndex: 2,
+  [theme.breakpoints.up('md')]: {
+    width: '24px',
+    height: '24px',
+    border: `4px solid ${theme.palette.background.default}`,
+    boxShadow: `0 0 20px ${theme.palette.primary.main}60`,
+  },
+  [theme.breakpoints.down('md')]: {
+    left: '11px',
+  }
 }));
 
 const TimelineCard = styled(Card)<{ expanded: boolean }>(({ theme, expanded }) => ({
@@ -81,6 +113,14 @@ const TimelineCard = styled(Card)<{ expanded: boolean }>(({ theme, expanded }) =
   boxShadow: expanded 
     ? '0 25px 50px -12px rgba(99, 102, 241, 0.3)' 
     : '0 10px 25px -5px rgba(0, 0, 0, 0.2)',
+  width: '100%',
+  [theme.breakpoints.up('md')]: {
+    maxWidth: '400px',
+  },
+  [theme.breakpoints.down('md')]: {
+    maxWidth: 'none',
+    margin: theme.spacing(0, 1),
+  },
   '&:hover': {
     borderColor: theme.palette.primary.main,
     transform: 'scale(1.02)',
@@ -199,30 +239,34 @@ const ExperienceTimeline: React.FC = () => {
                   key={index} 
                   isLeft={isLeft} 
                   index={index}
-                  sx={{ pr: isLeft ? 4 : 0, pl: isLeft ? 0 : 4 }}
                 >
-                  <TimelineDot sx={{ 
-                    left: isLeft ? 'calc(100% + 16px)' : '-28px' 
+                  <TimelineDot sx={{
+                    left: {
+                      xs: '11px',
+                      md: isLeft ? 'calc(100% + 16px)' : '-28px'
+                    }
                   }} />
                   
                   <TimelineCard
                     expanded={isExpanded}
                     onClick={() => setExpandedItem(isExpanded ? null : index)}
-                    sx={{ maxWidth: '400px', width: '100%' }}
                   >
-                    <CardContent sx={{ p: 3 }}>
+                    <CardContent sx={{ 
+                      p: { xs: 2, md: 3 }
+                    }}>
                       <Stack spacing={2}>
                         <Box>
                           <Typography variant="h6" sx={{ 
                             color: 'primary.main',
                             fontWeight: 700,
-                            fontSize: '2rem'
+                            fontSize: { xs: '1.5rem', md: '2rem' }
                           }}>
                             {exp.year}
                           </Typography>
                           <Typography variant="h5" sx={{ 
                             fontWeight: 600,
-                            mb: 0.5
+                            mb: 0.5,
+                            fontSize: { xs: '1.1rem', md: '1.5rem' }
                           }}>
                             {exp.title}
                           </Typography>
@@ -267,7 +311,10 @@ const ExperienceTimeline: React.FC = () => {
                               }}>
                                 Technologies:
                               </Typography>
-                              <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap', gap: 1 }}>
+                              <Stack direction="row" spacing={1} sx={{ 
+                                flexWrap: 'wrap', 
+                                gap: { xs: 0.5, md: 1 }
+                              }}>
                                 {exp.technologies.map((tech, i) => (
                                   <Chip
                                     key={i}

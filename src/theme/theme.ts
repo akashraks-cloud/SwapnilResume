@@ -81,43 +81,89 @@ const theme = createTheme({
       fontSize: '3rem',
       fontWeight: 600,
       lineHeight: 1.2,
-      color: '#F8FAFC'
+      color: '#F8FAFC',
+      '@media (max-width: 960px)': {
+        fontSize: '2.5rem'
+      },
+      '@media (max-width: 600px)': {
+        fontSize: '2rem',
+        lineHeight: 1.3
+      },
+      '@media (max-width: 480px)': {
+        fontSize: '1.75rem'
+      }
     },
     h3: {
       fontSize: '2rem',
       fontWeight: 600,
       lineHeight: 1.3,
-      color: '#F8FAFC'
+      color: '#F8FAFC',
+      '@media (max-width: 960px)': {
+        fontSize: '1.75rem'
+      },
+      '@media (max-width: 600px)': {
+        fontSize: '1.5rem',
+        lineHeight: 1.4
+      },
+      '@media (max-width: 480px)': {
+        fontSize: '1.25rem'
+      }
     },
     h4: {
       fontSize: '1.5rem',
       fontWeight: 600,
       lineHeight: 1.4,
-      color: '#F8FAFC'
+      color: '#F8FAFC',
+      '@media (max-width: 600px)': {
+        fontSize: '1.25rem'
+      },
+      '@media (max-width: 480px)': {
+        fontSize: '1.125rem'
+      }
     },
     h5: {
       fontSize: '1.25rem',
       fontWeight: 600,
       lineHeight: 1.4,
-      color: '#F8FAFC'
+      color: '#F8FAFC',
+      '@media (max-width: 600px)': {
+        fontSize: '1.125rem'
+      },
+      '@media (max-width: 480px)': {
+        fontSize: '1rem'
+      }
     },
     h6: {
       fontSize: '1.125rem',
       fontWeight: 600,
       lineHeight: 1.4,
-      color: '#F8FAFC'
+      color: '#F8FAFC',
+      '@media (max-width: 600px)': {
+        fontSize: '1rem'
+      },
+      '@media (max-width: 480px)': {
+        fontSize: '0.875rem'
+      }
     },
     body1: {
       fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
       fontSize: '1rem',
       lineHeight: 1.6,
-      color: '#CBD5E1'
+      color: '#CBD5E1',
+      '@media (max-width: 600px)': {
+        fontSize: '0.875rem',
+        lineHeight: 1.5
+      }
     },
     body2: {
       fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
       fontSize: '0.875rem',
       lineHeight: 1.6,
-      color: '#94A3B8'
+      color: '#94A3B8',
+      '@media (max-width: 600px)': {
+        fontSize: '0.75rem',
+        lineHeight: 1.5
+      }
     }
   },
   shape: {

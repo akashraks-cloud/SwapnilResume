@@ -43,6 +43,9 @@ const FloatingSkillCard = styled(Card)<{ delay: number; hovered: boolean }>(({ t
   boxShadow: hovered 
     ? '0 25px 50px -12px rgba(99, 102, 241, 0.4)' 
     : '0 10px 25px -5px rgba(0, 0, 0, 0.2)',
+  [theme.breakpoints.down('md')]: {
+    padding: theme.spacing(2)
+  },
   '&:hover': {
     borderColor: theme.palette.primary.main,
     background: 'rgba(99, 102, 241, 0.1)',
@@ -180,7 +183,9 @@ const SkillsShowcase: React.FC = () => {
                 onMouseEnter={() => setHoveredSkill(index)}
                 onMouseLeave={() => setHoveredSkill(null)}
               >
-                <CardContent sx={{ p: 3 }}>
+                <CardContent sx={{ 
+                  p: { xs: 2, md: 3 }
+                }}>
                   <SkillIcon hovered={hoveredSkill === index}>
                     {skill.icon}
                   </SkillIcon>
@@ -188,7 +193,8 @@ const SkillsShowcase: React.FC = () => {
                   <Typography variant="h6" sx={{ 
                     mb: 1, 
                     fontWeight: 600,
-                    color: 'text.primary'
+                    color: 'text.primary',
+                    fontSize: { xs: '1rem', md: '1.25rem' }
                   }}>
                     {skill.name}
                   </Typography>
@@ -196,21 +202,27 @@ const SkillsShowcase: React.FC = () => {
                   <Typography variant="body2" sx={{ 
                     color: 'text.secondary',
                     mb: 2,
-                    minHeight: '40px',
+                    minHeight: { xs: '32px', md: '40px' },
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center'
+                    justifyContent: 'center',
+                    fontSize: { xs: '0.75rem', md: '0.875rem' },
+                    lineHeight: { xs: 1.4, md: 1.5 }
                   }}>
                     {skill.description}
                   </Typography>
                   
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-                    <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                    <Typography variant="body2" sx={{ 
+                      fontWeight: 500,
+                      fontSize: { xs: '0.75rem', md: '0.875rem' }
+                    }}>
                       Proficiency
                     </Typography>
                     <Typography variant="body2" sx={{ 
                       color: 'primary.main',
-                      fontWeight: 600
+                      fontWeight: 600,
+                      fontSize: { xs: '0.75rem', md: '0.875rem' }
                     }}>
                       {skill.level}%
                     </Typography>

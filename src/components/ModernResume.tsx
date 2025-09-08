@@ -11,7 +11,9 @@ const ModernResume: React.FC = () => {
   return (
     <Box sx={{ 
       overflow: 'hidden',
-      position: 'relative'
+      position: 'relative',
+      width: '100%',
+      minHeight: '100vh'
     }}>
       <PDFExportButton />
       <HeroSection />
