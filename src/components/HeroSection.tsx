@@ -217,13 +217,36 @@ const ProfileAvatar = styled(Avatar)(({ theme }) => ({
   }
 }));
 
-const TypingText = styled(Typography)<{ delay: number }>(({ delay }) => ({
+const TypingText = styled(Typography)<{ delay: number }>(({ delay, theme }) => ({
   overflow: 'hidden',
   borderRight: '3px solid #6366F1',
   whiteSpace: 'nowrap',
   margin: '0 auto',
   letterSpacing: '.15em',
-  animation: `${typing} 3.5s steps(40, end) ${delay}s both, ${blink} 0.75s step-end infinite`
+  animation: `${typing} 3.5s steps(40, end) ${delay}s both, ${blink} 0.75s step-end infinite`,
+  fontSize: '4rem !important',
+  fontWeight: '700 !important',
+  background: 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%) !important',
+  WebkitBackgroundClip: 'text !important',
+  WebkitTextFillColor: 'transparent !important',
+  backgroundClip: 'text !important',
+  textShadow: '0 0 30px rgba(99, 102, 241, 0.5)',
+  [theme.breakpoints.down('md')]: {
+    fontSize: '3rem !important',
+    letterSpacing: '.1em'
+  },
+  [theme.breakpoints.down('sm')]: {
+    fontSize: '2.5rem !important',
+    letterSpacing: '.08em',
+    whiteSpace: 'normal',
+    lineHeight: '1.2 !important',
+    textAlign: 'center',
+    borderRight: 'none',
+    animation: `${fadeInUp} 1s ease-out ${delay}s both`
+  },
+  [theme.breakpoints.down('xs')]: {
+    fontSize: '2rem !important'
+  }
 }));
 
 const LinkedInButton = styled(IconButton)(({ theme }) => ({
@@ -306,7 +329,15 @@ const GlassmorphicCard = styled(Box)(({ theme }) => ({
   animation: `${fadeInUp} 1s ease-out`,
   boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
   position: 'relative',
-  zIndex: 2
+  zIndex: 2,
+  [theme.breakpoints.down('md')]: {
+    padding: theme.spacing(4)
+  },
+  [theme.breakpoints.down('sm')]: {
+    padding: theme.spacing(3),
+    margin: theme.spacing(0, 2),
+    borderRadius: theme.spacing(2)
+  }
 }));
 
 const AnimatedText = styled(Typography)<{ delay: number }>(({ delay }) => ({

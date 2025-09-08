@@ -65,7 +65,17 @@ const theme = createTheme({
       background: 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)',
       WebkitBackgroundClip: 'text',
       WebkitTextFillColor: 'transparent',
-      backgroundClip: 'text'
+      backgroundClip: 'text',
+      '@media (max-width: 960px)': {
+        fontSize: '3rem'
+      },
+      '@media (max-width: 600px)': {
+        fontSize: '2.5rem',
+        lineHeight: 1.2
+      },
+      '@media (max-width: 480px)': {
+        fontSize: '2rem'
+      }
     },
     h2: {
       fontSize: '3rem',
