@@ -41,14 +41,14 @@ const FloatingSkillCard = styled(Card)<{ delay: number; hovered: boolean }>(({ t
   animationDelay: `${delay}s`,
   transform: hovered ? 'translateY(-20px) scale(1.05)' : 'translateY(0) scale(1)',
   boxShadow: hovered 
-    ? '0 25px 50px -12px rgba(99, 102, 241, 0.4)' 
+    ? '0 25px 50px -12px rgba(30, 58, 138, 0.4)' 
     : '0 10px 25px -5px rgba(0, 0, 0, 0.2)',
   [theme.breakpoints.down('md')]: {
     padding: theme.spacing(2)
   },
   '&:hover': {
     borderColor: theme.palette.primary.main,
-    background: 'rgba(99, 102, 241, 0.1)',
+    background: 'rgba(30, 58, 138, 0.1)',
   }
 }));
 

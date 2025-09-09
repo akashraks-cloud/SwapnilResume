@@ -41,7 +41,7 @@ const typing = keyframes`
 
 const blink = keyframes`
   from, to { border-color: transparent; }
-  50% { border-color: #6366F1; }
+  50% { border-color: #1E3A8A; }
 `;
 
 const codeFloat = keyframes`
@@ -70,18 +70,18 @@ const aiPulse = keyframes`
   }
   50% { 
     transform: scale(1.1) rotate(180deg);
-    box-shadow: 0 0 25px rgba(139, 92, 246, 0.8);
+    box-shadow: 0 0 25px rgba(30, 58, 138, 0.8);
   }
 `;
 
 const profileImageGlow = keyframes`
   0%, 100% {
-    box-shadow: 0 0 20px rgba(99, 102, 241, 0.3),
-                0 0 40px rgba(139, 92, 246, 0.2);
+    box-shadow: 0 0 20px rgba(30, 58, 138, 0.3),
+                0 0 40px rgba(30, 58, 138, 0.2);
   }
   50% {
-    box-shadow: 0 0 30px rgba(99, 102, 241, 0.6),
-                0 0 60px rgba(139, 92, 246, 0.4);
+    box-shadow: 0 0 30px rgba(30, 58, 138, 0.6),
+                0 0 60px rgba(30, 58, 138, 0.4);
   }
 `;
 
@@ -132,7 +132,7 @@ const Particle = styled(Box)<{ delay: number; duration: number; size: number }>(
   position: 'absolute',
   width: `${size}px`,
   height: `${size}px`,
-  background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
+  background: 'linear-gradient(135deg, #1E3A8A, #3B82F6)',
   borderRadius: '50%',
   animation: `${float} ${duration}s ease-in-out infinite`,
   animationDelay: `${delay}s`,
@@ -158,7 +158,7 @@ const CodeElement = styled(Box)<{ delay: number; duration: number }>(({ delay, d
   position: 'absolute',
   animation: `${codeFloat} ${duration}s ease-in-out infinite`,
   animationDelay: `${delay}s`,
-  color: '#6366F1',
+  color: '#1E3A8A',
   fontSize: '1.2rem',
   fontFamily: 'monospace',
   opacity: 0.7,
@@ -174,16 +174,16 @@ const AIIcon = styled(Box)<{ delay: number }>(({ delay }) => ({
   position: 'absolute',
   animation: `${aiPulse} 4s ease-in-out infinite`,
   animationDelay: `${delay}s`,
-  color: '#8B5CF6',
+  color: '#3B82F6',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   width: '50px',
   height: '50px',
   borderRadius: '50%',
-  background: 'rgba(139, 92, 246, 0.1)',
+  background: 'rgba(30, 58, 138, 0.1)',
   backdropFilter: 'blur(10px)',
-  border: '1px solid rgba(139, 92, 246, 0.3)',
+  border: '1px solid rgba(30, 58, 138, 0.3)',
   '& .MuiSvgIcon-root': {
     fontSize: '2rem'
   }
@@ -203,7 +203,7 @@ const ProfileImageContainer = styled(Box)(({ theme }) => ({
     width: 'calc(100% + 20px)',
     height: 'calc(100% + 20px)',
     borderRadius: '50%',
-    background: 'linear-gradient(45deg, #6366F1, #8B5CF6, #06B6D4)',
+    background: 'linear-gradient(45deg, #1E3A8A, #3B82F6, #06B6D4)',
     animation: `${profileImageGlow} 3s ease-in-out infinite`,
     zIndex: -1
   }
@@ -220,18 +220,18 @@ const ProfileAvatar = styled(Avatar)(({ theme }) => ({
 
 const TypingText = styled(Typography)<{ delay: number }>(({ delay, theme }) => ({
   overflow: 'hidden',
-  borderRight: '3px solid #6366F1',
+  borderRight: '3px solid #1E3A8A',
   whiteSpace: 'nowrap',
   margin: '0 auto',
   letterSpacing: '.15em',
   animation: `${typing} 3.5s steps(40, end) ${delay}s both, ${blink} 0.75s step-end infinite`,
   fontSize: '4rem !important',
   fontWeight: '700 !important',
-  background: 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%) !important',
+  background: 'linear-gradient(135deg, #1E3A8A 0%, #3B82F6 100%) !important',
   WebkitBackgroundClip: 'text !important',
   WebkitTextFillColor: 'transparent !important',
   backgroundClip: 'text !important',
-  textShadow: '0 0 30px rgba(99, 102, 241, 0.5)',
+  textShadow: '0 0 30px rgba(30, 58, 138, 0.5)',
   [theme.breakpoints.down('md')]: {
     fontSize: '3rem !important',
     letterSpacing: '.1em'
@@ -314,35 +314,48 @@ const NotificationToast = styled(Box)<{ show: boolean }>(({ show, theme }) => ({
 }));
 
 const TechChip = styled(Chip)<{ delay: number }>(({ delay, theme }) => ({
-  background: 'rgba(99, 102, 241, 0.1)',
-  color: '#6366F1',
-  border: '1px solid rgba(99, 102, 241, 0.3)',
+  background: 'rgba(255, 255, 255, 0.95)',
+  color: '#1E3A8A',
+  border: '2px solid #1E3A8A',
   backdropFilter: 'blur(10px)',
   animation: `${fadeInUp} 1s ease-out ${delay}s both`,
   fontSize: '1rem',
   padding: theme.spacing(1, 2),
+  fontWeight: 700,
+  textTransform: 'uppercase',
+  letterSpacing: '0.05em',
   '& .MuiChip-icon': {
     fontSize: '1.5rem !important',
     marginLeft: theme.spacing(1),
+    color: '#1E3A8A !important',
     [theme.breakpoints.down('sm')]: {
       fontSize: '1.3rem !important'
     }
   },
   '& .MuiChip-label': {
     fontSize: '1rem',
-    fontWeight: 600,
+    fontWeight: 700,
+    color: '#1E3A8A',
     [theme.breakpoints.down('sm')]: {
       fontSize: '0.9rem'
     }
   },
   '&:hover': {
-    background: 'rgba(99, 102, 241, 0.2)',
-    transform: 'translateY(-2px)',
-    boxShadow: '0 5px 15px rgba(99, 102, 241, 0.3)'
+    background: '#1E3A8A',
+    color: 'white',
+    transform: 'translateY(-3px) scale(1.05)',
+    boxShadow: '0 8px 25px rgba(30, 58, 138, 0.4)',
+    '& .MuiChip-icon': {
+      color: 'white !important'
+    },
+    '& .MuiChip-label': {
+      color: 'white'
+    }
   },
   transition: 'all 0.3s ease',
   [theme.breakpoints.down('sm')]: {
-    padding: theme.spacing(0.8, 1.5)
+    padding: theme.spacing(0.8, 1.5),
+    margin: theme.spacing(0.5)
   }
 }));
 
@@ -354,20 +367,33 @@ const ScrollIndicator = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  color: 'rgba(255, 255, 255, 0.7)',
+  background: 'rgba(255, 255, 255, 0.1)',
+  backdropFilter: 'blur(20px)',
+  border: '2px solid rgba(255, 255, 255, 0.2)',
+  borderRadius: theme.spacing(3),
+  padding: theme.spacing(2, 3),
+  color: 'rgba(255, 255, 255, 0.9)',
   cursor: 'pointer',
   animation: `${fadeInUp} 1s ease-out 2s both`,
   '&:hover': {
+    background: 'rgba(255, 255, 255, 0.2)',
+    borderColor: 'rgba(255, 255, 255, 0.4)',
     color: 'rgba(255, 255, 255, 1)',
-    transform: 'translateX(-50%) translateY(-5px)'
+    transform: 'translateX(-50%) translateY(-8px) scale(1.05)'
   },
-  transition: 'all 0.3s ease'
+  transition: 'all 0.3s ease',
+  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
+  [theme.breakpoints.down('sm')]: {
+    padding: theme.spacing(1.5, 2.5),
+    bottom: '1rem'
+  }
 }));
 
 const ScrollIcon = styled(KeyboardArrowDownIcon)(() => ({
-  fontSize: '2rem',
+  fontSize: '2.5rem',
   animation: `${bounce} 2s infinite`,
-  marginTop: '0.5rem'
+  marginTop: '0.5rem',
+  filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3))'
 }));
 
 const GlassmorphicCard = styled(Box)(({ theme }) => ({
@@ -564,7 +590,7 @@ const HeroSection: React.FC = () => {
                 sx={{
                   width: { xs: 120, sm: 150, md: 180 },
                   height: { xs: 120, sm: 150, md: 180 },
-                  background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
+                  background: 'linear-gradient(135deg, #1E3A8A, #3B82F6)',
                   fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
                   fontWeight: 'bold',
                   color: 'white'
@@ -596,7 +622,29 @@ const HeroSection: React.FC = () => {
               flexWrap="wrap" 
               justifyContent="center"
               alignItems="center"
+              sx={{
+                background: 'rgba(0, 0, 0, 0.3)',
+                backdropFilter: 'blur(20px)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                borderRadius: 3,
+                padding: { xs: 3, md: 4 },
+                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)',
+                '& > *': {
+                  margin: { xs: '6px !important', md: '8px !important' }
+                }
+              }}
             >
+              <Typography variant="h6" sx={{
+                color: 'white',
+                fontWeight: 600,
+                textAlign: 'center',
+                mb: { xs: 1, sm: 0 },
+                mr: { sm: 2 },
+                fontSize: { xs: '1rem', md: '1.125rem' },
+                textShadow: '0 1px 3px rgba(0, 0, 0, 0.5)'
+              }}>
+                Core Expertise:
+              </Typography>
               <TechChip delay={1.0} label="Java" icon={<CodeIcon />} />
               <TechChip delay={1.1} label="React" icon={<DeveloperModeIcon />} />
               <TechChip delay={1.2} label="AI/ML" icon={<SmartToyIcon />} />
@@ -697,16 +745,21 @@ const HeroSection: React.FC = () => {
       <ScrollIndicator onClick={() => {
         const nextSection = document.querySelector('#skills-section');
         if (nextSection) {
-          nextSection.scrollIntoView({ behavior: 'smooth' });
+          nextSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       }}>
         <Typography variant="body2" sx={{ 
-          fontSize: '0.9rem',
-          fontWeight: 500,
+          fontSize: { xs: '0.8rem', md: '0.9rem' },
+          fontWeight: 600,
           letterSpacing: '0.1em',
-          textTransform: 'uppercase'
+          textTransform: 'uppercase',
+          textAlign: 'center',
+          lineHeight: 1.2,
+          textShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
         }}>
-          Scroll Down for More Details
+          Explore My Skills
+          <br />
+          <span style={{ fontSize: '0.7em', opacity: 0.8 }}>Scroll Down</span>
         </Typography>
         <ScrollIcon />
       </ScrollIndicator>

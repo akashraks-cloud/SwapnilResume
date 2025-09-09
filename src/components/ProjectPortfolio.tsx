@@ -55,7 +55,7 @@ const ProjectCard = styled(Card)<{ side: 'front' | 'back' }>(
     backfaceVisibility: 'hidden',
     background: side === 'front' 
       ? 'rgba(30, 41, 59, 0.8)' 
-      : 'linear-gradient(135deg, rgba(99, 102, 241, 0.9), rgba(139, 92, 246, 0.9))',
+      : 'linear-gradient(135deg, rgba(30, 58, 138, 0.9), rgba(59, 130, 246, 0.9))',
     backdropFilter: 'blur(20px)',
     border: '1px solid rgba(148, 163, 184, 0.2)',
     borderRadius: theme.spacing(3),
@@ -64,7 +64,7 @@ const ProjectCard = styled(Card)<{ side: 'front' | 'back' }>(
     transform: side === 'back' ? 'rotateY(180deg)' : 'rotateY(0deg)',
     '&:hover': {
       borderColor: theme.palette.primary.main,
-      boxShadow: '0 25px 50px -12px rgba(99, 102, 241, 0.4)',
+      boxShadow: '0 25px 50px -12px rgba(30, 58, 138, 0.4)',
     }
   })
 );
@@ -73,7 +73,7 @@ const FlipIndicator = styled(Box)(({ theme }) => ({
   position: 'absolute',
   top: theme.spacing(1),
   right: theme.spacing(1),
-  background: 'rgba(99, 102, 241, 0.8)',
+  background: 'rgba(30, 58, 138, 0.8)',
   borderRadius: '50%',
   width: '32px',
   height: '32px',
@@ -85,7 +85,7 @@ const FlipIndicator = styled(Box)(({ theme }) => ({
   zIndex: 2,
   transition: 'all 0.3s ease',
   '&:hover': {
-    background: 'rgba(99, 102, 241, 1)',
+    background: 'rgba(30, 58, 138, 1)',
     transform: 'scale(1.1)'
   }
 }));

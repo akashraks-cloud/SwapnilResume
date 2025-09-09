@@ -37,7 +37,7 @@ const ContactCard = styled(Card)<{ hovered: boolean; delay: number }>(({ theme, 
   animationDelay: `${delay}s`,
   transform: hovered ? 'translateY(-10px) scale(1.05)' : 'translateY(0) scale(1)',
   boxShadow: hovered 
-    ? '0 25px 50px -12px rgba(99, 102, 241, 0.4)' 
+    ? '0 25px 50px -12px rgba(30, 58, 138, 0.4)' 
     : '0 10px 25px -5px rgba(0, 0, 0, 0.2)',
   '&:hover': {
     borderColor: theme.palette.primary.main,
@@ -59,7 +59,7 @@ const ContactIcon = styled(Box)(({ theme }) => ({
   fontSize: '1.5rem',
   color: 'white',
   marginBottom: theme.spacing(2),
-  boxShadow: '0 10px 30px rgba(99, 102, 241, 0.3)',
+  boxShadow: '0 10px 30px rgba(30, 58, 138, 0.3)',
   transition: 'all 0.3s ease',
   [theme.breakpoints.down('md')]: {
     width: '50px',
@@ -79,7 +79,7 @@ const SocialButton = styled(IconButton)(({ theme }) => ({
     background: theme.palette.primary.main,
     color: 'white',
     transform: 'translateY(-2px)',
-    boxShadow: '0 10px 25px rgba(99, 102, 241, 0.4)'
+    boxShadow: '0 10px 25px rgba(30, 58, 138, 0.4)'
   }
 }));
 
@@ -229,7 +229,7 @@ const ContactSection: React.FC = () => {
                 <StatsCard key={index}>
                   <Typography variant="h3" sx={{ 
                     fontWeight: 700,
-                    background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
+                    background: 'linear-gradient(135deg, #1E3A8A, #3B82F6)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     backgroundClip: 'text',
@@ -284,9 +284,9 @@ const ContactSection: React.FC = () => {
 
           {/* Call to Action */}
           <Box textAlign="center" sx={{ 
-            background: 'rgba(99, 102, 241, 0.1)',
+            background: 'rgba(30, 58, 138, 0.1)',
             backdropFilter: 'blur(20px)',
-            border: '1px solid rgba(99, 102, 241, 0.2)',
+            border: '1px solid rgba(30, 58, 138, 0.2)',
             borderRadius: 3,
             p: 4,
             maxWidth: '600px'

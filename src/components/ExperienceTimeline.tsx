@@ -41,10 +41,10 @@ const TimelineWrapper = styled(Box)(({ theme }) => ({
       top: 0,
       bottom: 0,
       width: '4px',
-      background: 'linear-gradient(180deg, #6366F1, #8B5CF6, #06B6D4)',
+      background: 'linear-gradient(180deg, #1E3A8A, #3B82F6, #06B6D4)',
       transform: 'translateX(-50%)',
       borderRadius: '2px',
-      boxShadow: '0 0 20px rgba(99, 102, 241, 0.5)'
+      boxShadow: '0 0 20px rgba(30, 58, 138, 0.5)'
     }
   },
   [theme.breakpoints.down('md')]: {
@@ -55,9 +55,9 @@ const TimelineWrapper = styled(Box)(({ theme }) => ({
       top: 0,
       bottom: 0,
       width: '3px',
-      background: 'linear-gradient(180deg, #6366F1, #8B5CF6, #06B6D4)',
+      background: 'linear-gradient(180deg, #1E3A8A, #3B82F6, #06B6D4)',
       borderRadius: '2px',
-      boxShadow: '0 0 15px rgba(99, 102, 241, 0.5)'
+      boxShadow: '0 0 15px rgba(30, 58, 138, 0.5)'
     }
   }
 }));
@@ -111,7 +111,7 @@ const TimelineCard = styled(Card)<{ expanded: boolean }>(({ theme, expanded }) =
   transition: 'all 0.3s ease',
   transform: expanded ? 'scale(1.02)' : 'scale(1)',
   boxShadow: expanded 
-    ? '0 25px 50px -12px rgba(99, 102, 241, 0.3)' 
+    ? '0 25px 50px -12px rgba(30, 58, 138, 0.3)' 
     : '0 10px 25px -5px rgba(0, 0, 0, 0.2)',
   width: '100%',
   [theme.breakpoints.up('md')]: {
@@ -124,7 +124,7 @@ const TimelineCard = styled(Card)<{ expanded: boolean }>(({ theme, expanded }) =
   '&:hover': {
     borderColor: theme.palette.primary.main,
     transform: 'scale(1.02)',
-    boxShadow: '0 25px 50px -12px rgba(99, 102, 241, 0.3)'
+    boxShadow: '0 25px 50px -12px rgba(30, 58, 138, 0.3)'
   }
 }));
 

@@ -14,7 +14,7 @@ const typewriter = keyframes`
 
 const blink = keyframes`
   from, to { border-color: transparent; }
-  50% { border-color: #8B5CF6; }
+  50% { border-color: #1E3A8A; }
 `;
 
 const fadeOut = keyframes`
@@ -56,7 +56,7 @@ const LoadingContainer = styled(Box)<{ fadeOut: boolean }>(({ fadeOut, theme }) 
     left: 0,
     width: '100%',
     height: '2px',
-    background: 'linear-gradient(90deg, transparent, #8B5CF6, transparent)',
+    background: 'linear-gradient(90deg, transparent, #1E3A8A, transparent)',
     animation: `${scanLine} 4s ease-in-out infinite`,
   }
 }));
@@ -66,8 +66,8 @@ const TerminalContainer = styled(Box)(({ theme }) => ({
   padding: theme.spacing(2),
   borderRadius: '8px',
   backgroundColor: 'rgba(20, 0, 20, 0.9)',
-  border: '2px solid #8B5CF6',
-  boxShadow: '0 0 50px rgba(139, 92, 246, 0.3)',
+  border: '2px solid #1E3A8A',
+  boxShadow: '0 0 50px rgba(30, 58, 138, 0.3)',
   fontFamily: '"Courier New", "Monaco", "Lucida Console", monospace',
   width: '100%',
   maxWidth: '600px',
@@ -103,13 +103,13 @@ const TerminalContainer = styled(Box)(({ theme }) => ({
 }));
 
 const CodeLine = styled(Typography)<{ delay: number; animate: boolean }>(({ delay, animate, theme }) => ({
-  color: '#8B5CF6',
+  color: '#1E3A8A',
   fontFamily: 'inherit',
   fontSize: '0.9rem',
   lineHeight: 1.6,
   margin: 0,
   overflow: 'hidden',
-  borderRight: '3px solid #8B5CF6',
+  borderRight: '3px solid #1E3A8A',
   whiteSpace: 'nowrap',
   width: animate ? '100%' : '0',
   animation: animate ? `${typewriter} 1.5s steps(40, end) ${delay}s both, ${blink} 0.75s step-end infinite ${delay + 1.5}s` : 'none',
@@ -147,7 +147,7 @@ const MatrixChar = styled(Box)<{ delay: number; left: string }>(({ delay, left, 
   position: 'absolute',
   top: 0,
   left: left,
-  color: '#8B5CF6',
+  color: '#1E3A8A',
   fontFamily: '"Courier New", monospace',
   fontSize: '0.8rem',
   animation: `${matrixRain} 6s linear infinite`,
